@@ -1,7 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { COMPANY_DETAILS, SERVICES, TESTIMONIALS } from '../../data/site-data';
+import { COMPANY_DETAILS, SERVICES, TESTIMONIALS, TEAM_MEMBERS } from '../../data/site-data';
 import { Tilt3DDirective } from '../../shared/directives/tilt.directive';
 import { RevealOnScrollDirective } from '../../shared/directives/reveal-on-scroll.directive';
 import { CounterComponent } from '../../shared/components/counter.component';
@@ -19,11 +19,43 @@ import { BeforeAfterComponent } from '../../shared/components/before-after.compo
     BeforeAfterComponent
   ],
   template: `
-    <!-- 1. HERO SECTION -->
-    <section class="relative pt-12 pb-20 sm:pt-20 sm:pb-28 overflow-hidden">
-      <!-- 3D Gradients & Parallax Bubbles -->
-      <div class="absolute -top-24 -right-24 w-96 h-96 sm:w-[500px] sm:h-[500px] bg-gradient-to-br from-brand/20 via-brand-light/10 to-transparent rounded-full blur-3xl pointer-events-none animate-pulseGlow"></div>
-      <div class="absolute top-1/2 -left-32 w-80 h-80 bg-[#1B2B3C]/10 rounded-full blur-2xl pointer-events-none"></div>
+    <!-- 1. HERO SECTION WITH AMBIENT VIDEO ANIMATION -->
+    <section class="relative pt-16 pb-24 sm:pt-24 sm:pb-32 overflow-hidden bg-navy-dark text-white">
+      
+      <!-- Video Background Layer with Local High-Def Cleaning Video -->
+      <div class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <video 
+          #heroVideo
+          src="cleaning-hero.mp4"
+          [muted]="true"
+          muted 
+          autoplay 
+          loop 
+          playsinline 
+          preload="auto"
+          class="w-full h-full object-cover scale-105 opacity-80 filter brightness-100 contrast-105 transition-opacity duration-700">
+          <source src="cleaning-hero.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Subtle Gradient Overlay so video remains clearly visible while text stays crisp -->
+        <div class="absolute inset-0 bg-gradient-to-r from-navy-deep/80 via-navy/55 to-navy-dark/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-navy-deep/80 via-transparent to-navy/30"></div>
+      </div>
+
+      <!-- 3D Glow Orbs & Light Accents -->
+      <div class="absolute -top-24 -right-24 w-96 h-96 sm:w-[500px] sm:h-[500px] bg-gradient-to-br from-brand/25 via-brand-light/15 to-transparent rounded-full blur-3xl pointer-events-none animate-pulseGlow z-0"></div>
+      <div class="absolute bottom-10 -left-32 w-80 h-80 bg-brand-light/10 rounded-full blur-3xl pointer-events-none z-0"></div>
+
+      <!-- Floating Live Video Badge & Controls -->
+      <div class="absolute top-4 right-4 sm:right-8 z-20 flex items-center gap-2">
+        <button 
+          type="button"
+          (click)="toggleVideo()"
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-white/15 hover:bg-white/25 active:scale-95 backdrop-blur-md text-sand border border-white/20 shadow-sm transition pointer-events-auto cursor-pointer">
+          <span class="w-2 h-2 rounded-full" [ngClass]="isVideoPlaying() ? 'bg-emerald-400 animate-ping' : 'bg-amber-400'"></span>
+          <span>{{ isVideoPlaying() ? 'Live Demo ⏸' : 'Play Video ▶' }}</span>
+        </button>
+      </div>
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -32,26 +64,26 @@ import { BeforeAfterComponent } from '../../shared/components/before-after.compo
           <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
             
             <!-- Trust Badge Pill -->
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/80 border border-brand/20 shadow-sm backdrop-blur-md">
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 shadow-sm backdrop-blur-md">
               <span class="flex h-2.5 w-2.5 relative">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand"></span>
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-light opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-light"></span>
               </span>
-              <span class="text-xs font-semibold tracking-wide text-navy uppercase">
+              <span class="text-xs font-semibold tracking-wide text-sand-light uppercase">
                 #1 Rated Cleaners in East London & Essex
               </span>
             </div>
 
             <!-- Main Headline -->
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-black text-navy leading-[1.12] tracking-tight">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-black text-white leading-[1.12] tracking-tight">
               Spotless spaces. <br class="hidden sm:inline" />
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand via-brand-light to-amber-500">
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-light via-brand-warm to-amber-300">
                 Brighter days.
               </span>
             </h1>
 
             <!-- Subheading description -->
-            <p class="text-base sm:text-lg text-navy/75 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
+            <p class="text-base sm:text-lg text-sand/85 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
               Experience the pinnacle of cleanliness. Fully vetted, insured, and DBS-checked professionals providing premium domestic, commercial, and guaranteed deposit return end-of-tenancy cleaning.
             </p>
 
@@ -75,17 +107,17 @@ import { BeforeAfterComponent } from '../../shared/components/before-after.compo
             </div>
 
             <!-- Quick Trust Proof under Hero CTA -->
-            <div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-navy/70">
+            <div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-sand/85">
               <div class="flex items-center gap-2">
-                <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">✓</span>
+                <span class="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center font-bold">✓</span>
                 <span>Zero Obligation Quote</span>
               </div>
               <div class="flex items-center gap-2">
-                <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">✓</span>
+                <span class="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center font-bold">✓</span>
                 <span>£2,000,000 Insured</span>
               </div>
               <div class="flex items-center gap-2">
-                <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">✓</span>
+                <span class="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center font-bold">✓</span>
                 <span>Same-day Availability</span>
               </div>
             </div>
@@ -113,21 +145,19 @@ import { BeforeAfterComponent } from '../../shared/components/before-after.compo
               <!-- Subtle decorative lighting inside card -->
               <div class="absolute top-0 right-0 w-44 h-44 bg-gradient-to-b from-brand/20 to-transparent rounded-full blur-2xl pointer-events-none"></div>
 
-              <!-- Top Row with Status & Sparkle Motif -->
+              <!-- Top Row with Main Website Logo & Rating -->
               <div class="flex items-center justify-between mb-6 translate-z-20">
                 <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand to-brand-light flex items-center justify-center text-white shadow-glow">
-                    <svg class="w-7 h-7 text-white animate-twinkle" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
-                    </svg>
+                  <div class="w-14 h-14 rounded-2xl bg-white p-1.5 shadow-glow border border-brand/30 flex items-center justify-center overflow-hidden">
+                    <img src="logo.jpg" alt="Bright2Shine Main Brand Logo" class="w-full h-full object-contain" />
                   </div>
                   <div>
                     <h3 class="font-heading font-black text-navy text-lg leading-tight">Bright2Shine</h3>
-                    <p class="text-xs text-navy/60 font-semibold">Certified Cleaning Standard</p>
+                    <p class="text-xs text-brand font-bold">East London Cleaning Specialists</p>
                   </div>
                 </div>
 
-                <div class="flex items-center gap-1 text-amber-500 text-sm font-bold bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200/60">
+                <div class="flex items-center gap-1 text-amber-500 text-sm font-bold bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200/60 shadow-sm">
                   <span>★</span>
                   <span>5.0</span>
                 </div>
@@ -511,44 +541,126 @@ import { BeforeAfterComponent } from '../../shared/components/before-after.compo
       </div>
     </section>
 
-    <!-- 7. TESTIMONIALS CAROUSEL -->
+    <!-- 7. REVIEWS & TESTIMONIALS SECTION -->
     <section class="py-20 sm:py-28 bg-[#F3E6DA]/50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center max-w-2xl mx-auto mb-16 space-y-3" appRevealOnScroll>
-          <span class="text-xs uppercase font-bold tracking-widest text-brand">Client Reviews</span>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-brand text-xs font-bold uppercase tracking-wider shadow-sm border border-brand/20">
+            <span>⭐⭐⭐⭐⭐</span>
+            <span>Over 1,200+ 5-Star Cleans</span>
+          </div>
           <h2 class="text-3xl sm:text-4xl font-heading font-black text-navy tracking-tight">
-            Trusted By 1,200+ Homes & Businesses
+            Client Cleaning Reviews
           </h2>
           <p class="text-sm sm:text-base text-navy/70">
-            Hear directly from landlords, families, and office managers across Ilford, Barking, and East London.
+            Real feedback from tenants, homeowners, and commercial facilities across Ilford, Barking, and East London.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           <div 
-            *ngFor="let t of testimonials"
-            class="bg-white rounded-3xl p-6 border border-sand-dark/20 shadow-soft flex flex-col justify-between hover:shadow-float transition duration-300">
+            *ngFor="let t of testimonials.slice(0, 3)"
+            appTilt3D
+            [maxTilt]="8"
+            class="bg-white rounded-3xl p-7 border border-sand-dark/30 shadow-soft flex flex-col justify-between hover:shadow-card-3d transition-all duration-300">
             
             <div>
-              <!-- Stars -->
-              <div class="flex items-center text-amber-400 text-sm mb-4">
-                ★★★★★
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center text-amber-400 text-sm tracking-wider">
+                  ★★★★★
+                </div>
+                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                  {{ t.date }}
+                </span>
               </div>
+
               <p class="text-xs sm:text-sm text-navy/80 italic leading-relaxed mb-6">
                 “{{ t.quote }}”
               </p>
             </div>
 
-            <div class="pt-4 border-t border-sand/60 flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-navy to-brand text-white font-bold text-xs flex items-center justify-center flex-shrink-0">
-                {{ t.avatarText }}
-              </div>
+            <div class="pt-4 border-t border-sand/60 flex items-center gap-3.5">
+              <img 
+                [src]="t.avatarUrl" 
+                [alt]="t.name" 
+                class="w-12 h-12 rounded-full object-cover border-2 border-brand/30 shadow-sm flex-shrink-0"
+              />
               <div>
-                <h5 class="text-xs font-bold text-navy">{{ t.name }}</h5>
-                <p class="text-[11px] text-navy/60">{{ t.location }}</p>
-                <p class="text-[10px] text-brand font-semibold">{{ t.service }}</p>
+                <h5 class="text-sm font-heading font-bold text-navy leading-tight">{{ t.name }}</h5>
+                <p class="text-xs text-navy/60 font-medium">{{ t.location }}</p>
+                <span class="inline-block mt-0.5 text-[11px] font-bold text-brand bg-brand/10 px-2 py-0.5 rounded-md">
+                  Clean: {{ t.service }}
+                </span>
               </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Link to dedicated reviews page -->
+        <div class="mt-12 text-center">
+          <a 
+            routerLink="/reviews"
+            class="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-white border border-brand/30 hover:border-brand text-navy hover:text-brand font-heading font-bold text-sm shadow-soft hover:shadow-card-3d transition-all duration-300 group">
+            <span>Read All Verified Customer Reviews ({{ testimonials.length }})</span>
+            <span class="text-brand group-hover:translate-x-1 transition-transform">→</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 8. MEET OUR PROFESSIONAL CLEANING TEAM SECTION -->
+    <section class="py-20 sm:py-28 bg-white border-y border-sand-dark/20 relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3" appRevealOnScroll>
+          <span class="text-xs uppercase font-bold tracking-widest text-brand">Vetted & Dedicated</span>
+          <h2 class="text-3xl sm:text-4xl font-heading font-black text-navy tracking-tight">
+            Meet Our Specialist Cleaning Team
+          </h2>
+          <p class="text-sm sm:text-base text-navy/70 leading-relaxed">
+            Every Bright2Shine cleaning operative is fully DBS-verified, trained in COSHH health and safety protocols, and dedicated to immaculate results.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div 
+            *ngFor="let member of team"
+            appTilt3D
+            [maxTilt]="8"
+            class="bg-sand/30 rounded-3xl p-5 border border-sand-dark/30 shadow-soft hover:shadow-card-3d transition-all duration-300 flex flex-col justify-between group">
+            
+            <div>
+              <!-- Team Member Photo -->
+              <div class="w-full aspect-square rounded-2xl overflow-hidden mb-5 border-2 border-white shadow-md relative">
+                <img 
+                  [src]="member.imageUrl" 
+                  [alt]="member.name" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div class="absolute bottom-2 left-2 right-2 bg-navy/80 backdrop-blur-md text-white text-[10px] font-bold py-1 px-2.5 rounded-lg text-center truncate">
+                  {{ member.badge }}
+                </div>
+              </div>
+
+              <!-- Name & Role -->
+              <h4 class="text-lg font-heading font-bold text-navy group-hover:text-brand transition">
+                {{ member.name }}
+              </h4>
+              <p class="text-xs font-semibold text-brand mb-2">
+                {{ member.role }}
+              </p>
+              <p class="text-xs text-navy/70 leading-relaxed mb-4">
+                {{ member.bio }}
+              </p>
+            </div>
+
+            <!-- Footer Experience & Specialism -->
+            <div class="pt-3 border-t border-sand-dark/30 flex items-center justify-between text-[11px]">
+              <span class="font-bold text-navy/75">{{ member.experience }}</span>
+              <span class="text-brand font-semibold">Verified Cleaner ✓</span>
             </div>
 
           </div>
@@ -557,19 +669,19 @@ import { BeforeAfterComponent } from '../../shared/components/before-after.compo
       </div>
     </section>
 
-    <!-- 8. AREAS COVERED MAP & POSTCODES -->
-    <section class="py-16 bg-white border-y border-sand-dark/20">
+    <!-- 9. AREAS COVERED MAP & POSTCODES -->
+    <section class="py-16 bg-[#FAF8F5]">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-navy rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden">
+        <div class="bg-navy rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden shadow-float">
           
           <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div class="lg:col-span-7 space-y-4">
-              <span class="text-xs uppercase font-bold tracking-widest text-brand-light">Local Coverage</span>
+              <span class="text-xs uppercase font-bold tracking-widest text-brand-light">Local Cleaning Coverage</span>
               <h2 class="text-2xl sm:text-3xl font-heading font-black text-white">
-                Serving Ilford, Barking, Redbridge & All Surrounding Boroughs
+                Serving Ilford, Barking, Redbridge & Surrounding Boroughs
               </h2>
               <p class="text-sand/80 text-sm leading-relaxed">
-                Our mobile cleaning teams are based directly in IG11 (Barking/Viking) and service all East London and Essex postal regions with rapid response times.
+                Our mobile cleaning teams are based directly in Barking (IG11) and service all East London and Essex postal regions with rapid response times.
               </p>
 
               <div class="pt-2 flex flex-wrap gap-2">
@@ -587,7 +699,7 @@ import { BeforeAfterComponent } from '../../shared/components/before-after.compo
               <a 
                 routerLink="/contact"
                 class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-brand to-brand-light text-white text-center font-heading font-bold text-sm shadow-glow hover:scale-[1.02] transition">
-                Check Availability In Your Postcode
+                View Contact & Headquarters
               </a>
             </div>
           </div>
@@ -596,7 +708,7 @@ import { BeforeAfterComponent } from '../../shared/components/before-after.compo
       </div>
     </section>
 
-    <!-- 9. CTA BANNER -->
+    <!-- 10. CTA BANNER -->
     <section class="py-20 sm:py-24 bg-gradient-to-b from-[#FAF8F5] to-[#F3E6DA]">
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
         <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-brand/10 text-brand mb-2">
@@ -606,11 +718,11 @@ import { BeforeAfterComponent } from '../../shared/components/before-after.compo
         </div>
 
         <h2 class="text-3xl sm:text-5xl font-heading font-black text-navy tracking-tight">
-          Ready For A Pristine, Sparkling Space?
+          Ready For A Spotless Clean?
         </h2>
 
         <p class="text-base sm:text-lg text-navy/70 max-w-2xl mx-auto leading-relaxed">
-          Get your free instant estimate today with no obligation. Our reliable team is ready to make your property shine.
+          Book your cleaning team today with complete peace of mind. Our vetted staff is ready to make your space shine.
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -633,8 +745,54 @@ import { BeforeAfterComponent } from '../../shared/components/before-after.compo
     </section>
   `
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit {
   company = COMPANY_DETAILS;
   services = SERVICES;
   testimonials = TESTIMONIALS;
+  team = TEAM_MEMBERS;
+
+  @ViewChild('heroVideo') heroVideo?: ElementRef<HTMLVideoElement>;
+  isVideoPlaying = signal<boolean>(true);
+
+  ngAfterViewInit(): void {
+    if (this.heroVideo?.nativeElement) {
+      const vid = this.heroVideo.nativeElement;
+      vid.muted = true;
+      vid.defaultMuted = true;
+      vid.playsInline = true;
+      
+      const playPromise = vid.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            this.isVideoPlaying.set(true);
+          })
+          .catch(() => {
+            // Autoplay safety: trigger on first user gesture
+            this.isVideoPlaying.set(false);
+            const resumeOnInteraction = () => {
+              vid.muted = true;
+              vid.play().then(() => this.isVideoPlaying.set(true)).catch(() => {});
+              window.removeEventListener('click', resumeOnInteraction);
+              window.removeEventListener('touchstart', resumeOnInteraction);
+            };
+            window.addEventListener('click', resumeOnInteraction, { once: true });
+            window.addEventListener('touchstart', resumeOnInteraction, { once: true });
+          });
+      }
+    }
+  }
+
+  toggleVideo(): void {
+    if (this.heroVideo?.nativeElement) {
+      const vid = this.heroVideo.nativeElement;
+      if (vid.paused) {
+        vid.muted = true;
+        vid.play().then(() => this.isVideoPlaying.set(true)).catch(() => {});
+      } else {
+        vid.pause();
+        this.isVideoPlaying.set(false);
+      }
+    }
+  }
 }

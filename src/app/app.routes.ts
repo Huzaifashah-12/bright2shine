@@ -12,6 +12,11 @@ export const routes: Routes = [
     title: 'Services & Pricing - Bright2Shine Ltd'
   },
   {
+    path: 'reviews',
+    loadComponent: () => import('./features/reviews/reviews.component').then(m => m.ReviewsComponent),
+    title: 'Client Reviews & Ratings - Bright2Shine Ltd'
+  },
+  {
     path: 'contact',
     loadComponent: () => import('./features/contact/contact.component').then(m => m.ContactComponent),
     title: 'Contact & Free Quote - Bright2Shine Ltd'

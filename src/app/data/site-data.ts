@@ -123,10 +123,12 @@ export interface TestimonialItem {
   name: string;
   location: string;
   service: string;
+  category: 'residential' | 'tenancy' | 'commercial' | 'specialist';
   rating: number;
   date: string;
   quote: string;
   avatarText: string;
+  avatarUrl: string;
 }
 
 export const TESTIMONIALS: TestimonialItem[] = [
@@ -135,40 +137,150 @@ export const TESTIMONIALS: TestimonialItem[] = [
     name: 'Sarah Jenkins',
     location: 'Ilford, Redbridge',
     service: 'End of Tenancy Clean',
+    category: 'tenancy',
     rating: 5,
-    date: '2 weeks ago',
+    date: 'Verified Tenancy Review',
     quote: 'Bright2Shine did an unbelievable job on our 3-bedroom rental property. The oven looked brand new and the landlord returned 100% of our deposit with zero disputes. Highly recommended!',
-    avatarText: 'SJ'
+    avatarText: 'SJ',
+    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80'
   },
   {
     id: '2',
     name: 'Tariq Al-Mansoor',
     location: 'Barking (IG11)',
     service: 'Office Cleaning Contract',
+    category: 'commercial',
     rating: 5,
-    date: '1 month ago',
+    date: 'Verified Commercial Client',
     quote: 'We contracted Bright2Shine for our financial advisory office in Barking. The team is consistently punctual, discreet, and our office always smells revitalised every morning. First-class service.',
-    avatarText: 'TM'
+    avatarText: 'TM',
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80'
   },
   {
     id: '3',
     name: 'Emma & Liam Ward',
     location: 'Romford & East London',
     service: 'Fortnightly Domestic Clean',
+    category: 'residential',
     rating: 5,
-    date: '3 weeks ago',
+    date: 'Verified Homeowner',
     quote: 'With two toddlers and two dogs, keeping up with the house felt impossible. Having Bright2Shine come every other Thursday has been a total game-changer. Trustworthy, friendly, and thorough.',
-    avatarText: 'EW'
+    avatarText: 'EW',
+    avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80'
   },
   {
     id: '4',
     name: 'Dr. Michael Chen',
     location: 'Stratford / East London',
-    service: 'Carpet & Deep Clean',
+    service: 'Carpet & Upholstery Clean',
+    category: 'specialist',
     rating: 5,
-    date: 'Last month',
+    date: 'Verified Specialist Review',
     quote: 'Removed wine stains from a cream wool rug that another cleaning service claimed was impossible to save! Courteous staff and transparent pricing from start to finish.',
-    avatarText: 'MC'
+    avatarText: 'MC',
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80'
+  },
+  {
+    id: '5',
+    name: 'Sophie Patel',
+    location: 'Wanstead, Redbridge',
+    service: 'Deep Move-In Cleaning',
+    category: 'residential',
+    rating: 5,
+    date: 'Verified Residential Clean',
+    quote: 'After our kitchen extension, the whole house had fine builder dust everywhere. The team wiped down every ceiling corner, cornice, tile and floor until everything gleamed.',
+    avatarText: 'SP',
+    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+  },
+  {
+    id: '6',
+    name: 'David O’Connor',
+    location: 'Dagenham (RM10)',
+    service: 'Commercial Facility Care',
+    category: 'commercial',
+    rating: 5,
+    date: 'Verified Facility Manager',
+    quote: 'Reliable and detail-focused cleaning team. Restrooms and reception areas are always immaculate. Their COSHH compliance paperwork made health & safety audits seamless.',
+    avatarText: 'DO',
+    avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=200&q=80'
+  },
+  {
+    id: '7',
+    name: 'Charlotte Davies',
+    location: 'Canary Wharf / E14',
+    service: 'Full End of Tenancy Clean',
+    category: 'tenancy',
+    rating: 5,
+    date: 'Verified Tenant Review',
+    quote: 'Our inventory checkout clerk commented that it was the cleanest flat handover he had inspected all year. Passed with flying colours and deposit returned same day!',
+    avatarText: 'CD',
+    avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80'
+  },
+  {
+    id: '8',
+    name: 'James Reynolds',
+    location: 'Barking Riverside',
+    service: 'Weekly Apartment Cleaning',
+    category: 'residential',
+    rating: 5,
+    date: 'Verified Weekly Client',
+    quote: 'Always on time, polite and respectful of our home. They bring their own professional eco detergents which smell refreshing without overpowering chemical scents.',
+    avatarText: 'JR',
+    avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80'
+  }
+];
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  specialism: string;
+  experience: string;
+  badge: string;
+  imageUrl: string;
+  bio: string;
+}
+
+export const TEAM_MEMBERS: TeamMember[] = [
+  {
+    id: '1',
+    name: 'Elena Rostova',
+    role: 'Head of Quality & Deep Cleaning Operations',
+    specialism: 'End of Tenancy & Kitchen Degreasing',
+    experience: '8+ Years Experience',
+    badge: 'DBS Certified • Team Lead',
+    imageUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80',
+    bio: 'Oversees on-site quality checklists across all end-of-tenancy cleans, ensuring 100% deposit return pass rates with landlords.'
+  },
+  {
+    id: '2',
+    name: 'Marcus Adebayo',
+    role: 'Senior Carpet & Upholstery Extraction Specialist',
+    specialism: 'Industrial Steam & Fabric Restoration',
+    experience: '6+ Years Experience',
+    badge: 'Certified Technician',
+    imageUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80',
+    bio: 'Master of high-pressure hot water extraction machinery, eradicating allergens, pet odours, and persistent fabric discoloration.'
+  },
+  {
+    id: '3',
+    name: 'Priya Sharma',
+    role: 'Domestic Cleaning Lead Supervisor',
+    specialism: 'Eco-Friendly Residential Care',
+    experience: '5+ Years Experience',
+    badge: 'Eco-Hygiene Specialist',
+    imageUrl: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80',
+    bio: 'Specialises in gentle, pet-safe non-toxic cleaning regimens for regular family households across Ilford and Barking.'
+  },
+  {
+    id: '4',
+    name: 'Andrei Vasile',
+    role: 'Commercial & Facility Sanitisation Manager',
+    specialism: 'Office & Retail Night Shifts',
+    experience: '7+ Years Experience',
+    badge: 'COSHH & RAMS Certified',
+    imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80',
+    bio: 'Manages after-hours cleaning shifts for corporate offices and healthcare practices with strict hospital-grade hygiene controls.'
   }
 ];
 
@@ -191,7 +303,7 @@ export const FAQS: FaqItem[] = [
   },
   {
     question: 'How do you price and quote your cleaning services?',
-    answer: 'We provide 100% free, no-obligation quotes. For standard homes and end of tenancy cleans, we can provide immediate fixed quotes over the phone, WhatsApp, or through our website form. For commercial spaces, we offer free site visits to calculate exact requirements.',
+    answer: 'We provide 100% free, no-obligation quotes. For standard homes and end of tenancy cleans, we can provide immediate fixed quotes over the phone or WhatsApp. For commercial spaces, we offer free site visits to calculate exact requirements.',
     category: 'Pricing'
   },
   {

@@ -49,16 +49,15 @@ import { COMPANY_DETAILS } from '../../data/site-data';
       }">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         
-        <!-- Logo -->
+        <!-- Logo with Real Navbar Logo Image -->
         <a routerLink="/" class="flex items-center gap-3 group focus:outline-none">
-          <!-- Sparkle Emblem 3D Badge -->
-          <div class="relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-navy to-navy-light flex items-center justify-center shadow-lg group-hover:shadow-glow transition-all duration-300 transform group-hover:scale-105 border border-white/20">
-            <!-- Orange Sparkle Star Motif -->
-            <svg class="w-6 h-6 text-brand-light transform group-hover:rotate-12 transition-transform duration-500" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
-            </svg>
-            <!-- Orbit dot -->
-            <div class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-brand rounded-full border-2 border-white animate-pulse"></div>
+          <div class="relative w-12 h-12 rounded-2xl overflow-hidden bg-white shadow-md border border-brand/20 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+            <img 
+              src="navbar-logo.jpg" 
+              alt="Bright2Shine Logo" 
+              class="w-full h-full object-contain p-1"
+              (error)="$any($event.target).src = 'logo.jpg'"
+            />
           </div>
 
           <div class="flex flex-col">
@@ -66,7 +65,7 @@ import { COMPANY_DETAILS } from '../../data/site-data';
               Bright<span class="text-brand">2</span>Shine
             </span>
             <span class="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-navy/60 mt-0.5">
-              Cleaning Specialists
+              Professional Cleaning Services
             </span>
           </div>
         </a>
@@ -85,6 +84,12 @@ import { COMPANY_DETAILS } from '../../data/site-data';
             routerLinkActive="text-brand bg-brand/10 font-bold" 
             class="px-4 py-2 rounded-xl text-sm font-semibold text-navy/80 hover:text-brand hover:bg-brand/5 transition">
             Services
+          </a>
+          <a 
+            routerLink="/reviews" 
+            routerLinkActive="text-brand bg-brand/10 font-bold" 
+            class="px-4 py-2 rounded-xl text-sm font-semibold text-navy/80 hover:text-brand hover:bg-brand/5 transition">
+            Reviews
           </a>
           <a 
             routerLink="/contact" 
@@ -141,6 +146,15 @@ import { COMPANY_DETAILS } from '../../data/site-data';
       <div 
         *ngIf="mobileMenuOpen()" 
         class="md:hidden border-t border-sand-dark/20 bg-white/95 backdrop-blur-xl px-5 pt-4 pb-8 space-y-3 shadow-2xl animate-in slide-in-from-top-4 duration-200">
+        
+        <div class="flex items-center gap-3 pb-3 mb-2 border-b border-sand-dark/20 px-2">
+          <img src="navbar-logo.jpg" alt="Bright2Shine Logo" class="w-10 h-10 object-contain rounded-xl bg-white p-1 border border-brand/20 shadow-sm" />
+          <div>
+            <p class="font-heading font-black text-navy text-sm">Bright2Shine</p>
+            <p class="text-[10px] text-navy/60 font-semibold uppercase">Cleaning Services</p>
+          </div>
+        </div>
+
         <a 
           (click)="closeMobileMenu()" 
           routerLink="/" 
@@ -162,10 +176,19 @@ import { COMPANY_DETAILS } from '../../data/site-data';
 
         <a 
           (click)="closeMobileMenu()" 
+          routerLink="/reviews" 
+          routerLinkActive="bg-brand/10 text-brand font-bold" 
+          class="flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold text-navy hover:bg-sand/50">
+          <span>Client Reviews</span>
+          <svg class="w-4 h-4 text-navy/40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+
+        <a 
+          (click)="closeMobileMenu()" 
           routerLink="/contact" 
           routerLinkActive="bg-brand/10 text-brand font-bold" 
           class="flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold text-navy hover:bg-sand/50">
-          <span>Contact & Quote</span>
+          <span>Contact & Locations</span>
           <svg class="w-4 h-4 text-navy/40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>
 

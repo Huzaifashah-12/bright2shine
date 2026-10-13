@@ -19,10 +19,8 @@ import { COMPANY_DETAILS, SERVICES } from '../../data/site-data';
           <!-- Company Bio & Logo -->
           <div class="space-y-4">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand to-brand-light flex items-center justify-center text-white shadow-glow">
-                <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/>
-                </svg>
+              <div class="w-12 h-12 rounded-2xl bg-white overflow-hidden p-1 shadow-md border border-brand/30 flex items-center justify-center">
+                <img src="logo.jpg" alt="Bright2Shine Main Logo" class="w-full h-full object-contain" />
               </div>
               <div>
                 <span class="text-2xl font-heading font-black text-white tracking-tight">
@@ -66,13 +64,13 @@ import { COMPANY_DETAILS, SERVICES } from '../../data/site-data';
                 </a>
               </li>
               <li>
-                <a routerLink="/contact" class="text-sand/80 hover:text-brand-light transition flex items-center gap-2">
-                  <span class="text-brand text-xs">›</span> Request a Free Quote
+                <a routerLink="/reviews" class="text-sand/80 hover:text-brand-light transition flex items-center gap-2">
+                  <span class="text-brand text-xs">›</span> Customer Reviews (5.0 ★)
                 </a>
               </li>
               <li>
                 <a routerLink="/contact" class="text-sand/80 hover:text-brand-light transition flex items-center gap-2">
-                  <span class="text-brand text-xs">›</span> Emergency Cleans
+                  <span class="text-brand text-xs">›</span> Contact & Head Office
                 </a>
               </li>
               <li>
