@@ -4,12 +4,22 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent),
-    title: 'Bright2Shine - Professional Cleaning in East London & Essex'
+    title: 'Bright2Shine - Professional Cleaning in London & Essex'
   },
   {
     path: 'services',
     loadComponent: () => import('./features/services/services.component').then(m => m.ServicesComponent),
     title: 'Services & Pricing - Bright2Shine Ltd'
+  },
+  {
+    path: 'cleaning-process',
+    loadComponent: () => import('./features/cleaning-process/cleaning-process.component').then(m => m.CleaningProcessComponent),
+    title: 'Cleaning Process - Bright2Shine Ltd'
+  },
+  {
+    path: 'pricing',
+    redirectTo: 'services',
+    pathMatch: 'full'
   },
   {
     path: 'reviews',

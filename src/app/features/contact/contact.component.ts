@@ -103,13 +103,18 @@ import { COMPANY_DETAILS, SERVICES } from '../../data/site-data';
                       </svg>
                     </div>
                     <div>
-                      <p class="text-[11px] text-navy/60 uppercase font-bold">Email</p>
+                      <p class="text-[11px] text-navy/60 uppercase font-bold">Official Emails</p>
                       <h4 class="text-sm font-heading font-black text-navy">Written Inquiries</h4>
                     </div>
                   </div>
-                  <a [href]="'mailto:' + company.email" class="block text-sm font-bold text-navy hover:text-brand transition truncate">
-                    {{ company.email }}
-                  </a>
+                  <div class="space-y-1">
+                    <a [href]="'mailto:' + company.email" class="block text-sm font-bold text-navy hover:text-brand transition truncate">
+                      {{ company.email }}
+                    </a>
+                    <a [href]="'mailto:' + company.email2" class="block text-sm font-bold text-navy hover:text-brand transition truncate">
+                      {{ company.email2 }}
+                    </a>
+                  </div>
                 </div>
 
                 <!-- Hours Card -->

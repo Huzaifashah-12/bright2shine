@@ -1,7 +1,16 @@
 import { Component, signal, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { COMPANY_DETAILS, FAQS, SERVICES, ServiceItem } from '../../data/site-data';
+import { 
+  COMPANY_DETAILS, 
+  FAQS, 
+  SERVICES, 
+  ServiceItem, 
+  ROOM_PROCESS, 
+  HOURLY_PRICING, 
+  EXTRA_CLEANING_ADDONS, 
+  PROPERTY_PRICING_TABLE 
+} from '../../data/site-data';
 import { Tilt3DDirective } from '../../shared/directives/tilt.directive';
 
 @Component({
@@ -18,166 +27,148 @@ import { Tilt3DDirective } from '../../shared/directives/tilt.directive';
         <nav class="flex items-center justify-center sm:justify-start space-x-2 text-xs text-sand/70 mb-4">
           <a routerLink="/" class="hover:text-brand-light transition">Home</a>
           <span>/</span>
-          <span class="text-white font-semibold">Services</span>
+          <span class="text-white font-semibold">Services & Pricing</span>
         </nav>
 
         <h1 class="text-3xl sm:text-5xl font-heading font-black tracking-tight text-white mb-3">
-          Specialist Cleaning Services
+          Cleaning Services & Pricing
         </h1>
         <p class="text-sand/80 text-sm sm:text-base max-w-2xl leading-relaxed">
-          Tailored residential, commercial, and tenancy cleaning solutions across East London & Essex. Guaranteed standards, eco-safe materials, and vetted professionals.
+          Tailored residential, commercial, and tenancy cleaning solutions across London & Essex. Guaranteed standards, eco-safe materials, and vetted professionals.
         </p>
+
+        <!-- Quick email links -->
+        <div class="mt-4 flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs text-sand/80">
+          <span>Inquiries:</span>
+          <a [href]="'mailto:' + company.email" class="text-brand-light hover:underline">{{ company.email }}</a>
+          <span>•</span>
+          <a [href]="'mailto:' + company.email2" class="text-brand-light hover:underline">{{ company.email2 }}</a>
+        </div>
       </div>
     </section>
 
-    <!-- Filter Tabs & Services Grid -->
-    <section class="py-16 bg-[#FAF8F5]">
+
+
+    <!-- CLEANING PROCESS SECTION (Room-by-Room Breakdown) -->
+    <section class="py-20 bg-white border-y border-sand-dark/20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <!-- Filter Tabs -->
-        <div class="flex flex-wrap items-center justify-center gap-2.5 mb-14">
-          <button 
-            (click)="setFilter('all')"
-            [ngClass]="activeFilter() === 'all' ? 'bg-navy text-white shadow-md' : 'bg-white text-navy hover:bg-sand/60'"
-            class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition border border-sand-dark/30">
-            All Services ({{ allServices.length }})
-          </button>
-
-          <button 
-            (click)="setFilter('residential')"
-            [ngClass]="activeFilter() === 'residential' ? 'bg-navy text-white shadow-md' : 'bg-white text-navy hover:bg-sand/60'"
-            class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition border border-sand-dark/30">
-            Residential Cleans
-          </button>
-
-          <button 
-            (click)="setFilter('commercial')"
-            [ngClass]="activeFilter() === 'commercial' ? 'bg-navy text-white shadow-md' : 'bg-white text-navy hover:bg-sand/60'"
-            class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition border border-sand-dark/30">
-            Commercial & Offices
-          </button>
-
-          <button 
-            (click)="setFilter('specialist')"
-            [ngClass]="activeFilter() === 'specialist' ? 'bg-navy text-white shadow-md' : 'bg-white text-navy hover:bg-sand/60'"
-            class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition border border-sand-dark/30">
-            End of Tenancy & Carpets
-          </button>
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <span class="text-xs uppercase font-bold tracking-widest text-brand">Room-by-Room Excellence</span>
+          <h2 class="text-3xl sm:text-4xl font-heading font-black text-navy tracking-tight">
+            Our Standard Cleaning Process
+          </h2>
+          <p class="text-sm sm:text-base text-navy/70">
+            A comprehensive, hygienic approach to cleaning every room with natural products and specialized methods.
+          </p>
         </div>
 
-        <!-- Detailed Services Grid -->
-        <div class="space-y-12">
-          <div 
-            *ngFor="let s of filteredServices()" 
-            [id]="s.id"
-            appTilt3D
-            [maxTilt]="6"
-            class="bg-white rounded-3xl p-6 sm:p-10 border border-sand-dark/30 shadow-soft hover:shadow-card-3d transition-all duration-300">
-            
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              
-              <!-- Left: Description and What's Included -->
-              <div class="lg:col-span-8 space-y-5">
-                <div class="flex flex-wrap items-center gap-3">
-                  <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand/10 text-brand">
-                    {{ s.category }}
-                  </span>
-                  <span *ngIf="s.popular" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800">
-                    Client Favorite
-                  </span>
-                </div>
-
-                <h2 class="text-2xl sm:text-3xl font-heading font-black text-navy">
-                  {{ s.title }}
-                </h2>
-
-                <p class="text-navy/75 text-sm sm:text-base leading-relaxed">
-                  {{ s.description }}
-                </p>
-
-                <!-- What's included checklist -->
-                <div>
-                  <h4 class="font-heading font-bold text-navy text-sm uppercase tracking-wider mb-3">
-                    What's Included:
-                  </h4>
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    <div *ngFor="let item of s.features" class="flex items-start gap-2.5 text-xs sm:text-sm text-navy/85">
-                      <svg class="w-4 h-4 text-brand flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-                      </svg>
-                      <span>{{ item }}</span>
-                    </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div *ngFor="let room of roomProcess" class="bg-[#FAF8F5] rounded-3xl overflow-hidden border border-sand-dark/30 shadow-soft flex flex-col justify-between">
+            <div>
+              <div class="relative w-full aspect-[4/3] overflow-hidden">
+                <img [src]="room.image" [alt]="room.name" class="w-full h-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                <h3 class="absolute bottom-3 left-4 text-white font-heading font-black text-xl">{{ room.name }}</h3>
+              </div>
+              <div class="p-6">
+                <p class="text-xs text-brand font-bold mb-2">{{ room.tagline }}</p>
+                <p class="text-xs text-navy/70 mb-4">{{ room.description }}</p>
+                <div class="space-y-1.5 pt-3 border-t border-sand-dark/20">
+                  <div *ngFor="let task of room.tasks" class="text-xs text-navy/80 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+                    <span>{{ task }}</span>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-              <!-- Right: Pricing Box & Action Card -->
-              <div class="lg:col-span-4 bg-sand/40 rounded-2xl p-6 border border-sand-dark/30 flex flex-col justify-between space-y-6">
-                <div>
-                  <span class="text-xs font-bold uppercase text-navy/50 tracking-wider">Estimated Price</span>
-                  <p class="text-2xl font-heading font-black text-navy mt-1">{{ s.startingPrice }}</p>
-                  <p class="text-xs text-navy/60 mt-1">Turnaround: {{ s.turnaround }}</p>
-                </div>
+    <!-- PRICING TABLE SECTION (From dustbust.co.uk/pricing/) -->
+    <section class="py-20 bg-[#FAF8F5]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <span class="text-xs uppercase font-bold tracking-widest text-brand">Pricing Packages</span>
+          <h2 class="text-3xl sm:text-4xl font-heading font-black text-navy tracking-tight">
+            Comprehensive Rates & Fixed Packages
+          </h2>
+          <p class="text-sm text-navy/70">
+            Clear, transparent pricing based on your property layout and frequency needs.
+          </p>
+        </div>
 
-                <div class="space-y-3">
-                  <a 
-                    [href]="'tel:' + company.phone1Raw"
-                    class="w-full text-center block py-3.5 px-4 rounded-xl font-heading font-bold text-sm bg-gradient-to-r from-brand to-brand-light text-white shadow-md hover:shadow-glow transition">
-                    Call For {{ s.title }}
-                  </a>
+        <!-- Hourly cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div 
+            *ngFor="let item of hourlyPricing"
+            class="rounded-3xl p-7 border flex flex-col justify-between"
+            [ngClass]="item.featured ? 'bg-[#d4af37] text-navy border-white/60 shadow-card-3d' : 'bg-white text-navy border-sand-dark/30 shadow-soft'">
+            <div>
+              <h4 class="text-xl font-heading font-black mb-1">{{ item.title }}</h4>
+              <p class="text-2xl font-black mb-3">{{ item.rate }}<span class="text-xs font-normal ml-1">{{ item.unit }}</span></p>
+              <p class="text-xs opacity-75 mb-4">{{ item.description }}</p>
+              <ul class="space-y-1.5 text-xs">
+                <li *ngFor="let f of item.features" class="flex items-center gap-1.5">✓ {{ f }}</li>
+              </ul>
+            </div>
+            <div class="pt-6 mt-6 border-t border-black/10">
+              <a 
+                [href]="'https://wa.me/' + company.whatsappRaw"
+                target="_blank"
+                class="w-full text-center block py-2.5 rounded-xl font-bold text-xs"
+                [ngClass]="item.featured ? 'bg-navy text-white hover:bg-black' : 'bg-brand text-white hover:bg-brand-hover'">
+                Book Now →
+              </a>
+            </div>
+          </div>
 
-                  <a 
-                    [href]="'https://wa.me/' + company.whatsappRaw + '?text=Hi%20Bright2Shine,%20I%20would%20like%20to%20book%20' + s.title"
-                    target="_blank"
-                    class="w-full text-center block py-3 px-4 rounded-xl font-bold text-xs bg-[#25D366] text-white hover:bg-[#20ba5a] transition">
-                    Inquire via WhatsApp
-                  </a>
-                </div>
-
-                <div class="text-[11px] text-navy/60 space-y-1">
-                  <p>✓ All eco supplies provided</p>
-                  <p>✓ 100% Satisfaction guarantee</p>
+          <!-- Addons card -->
+          <div class="bg-white rounded-3xl p-7 border border-sand-dark/30 shadow-soft flex flex-col justify-between">
+            <div>
+              <h4 class="text-xl font-heading font-black text-navy mb-2">Extra Add-ons</h4>
+              <div class="space-y-2 mt-4">
+                <div *ngFor="let add of extraAddons" class="p-2.5 rounded-xl bg-sand/30 flex items-center justify-between text-xs">
+                  <span class="font-bold text-navy">{{ add.item }}</span>
+                  <span class="font-black text-brand">{{ add.price }}</span>
                 </div>
               </div>
-
+            </div>
+            <div class="pt-6 mt-6 border-t border-sand-dark/20">
+              <a 
+                [href]="'https://wa.me/' + company.whatsappRaw"
+                target="_blank"
+                class="w-full text-center block py-2.5 rounded-xl font-bold text-xs bg-navy text-white hover:bg-brand">
+                Inquire For Add-ons →
+              </a>
             </div>
           </div>
         </div>
 
-      </div>
-    </section>
-
-    <!-- Pricing / "How We Quote" Block -->
-    <section class="py-16 bg-[#F3E6DA]/50 border-y border-sand-dark/20">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-        <span class="text-xs uppercase font-bold tracking-widest text-brand">Transparent Billing</span>
-        <h2 class="text-2xl sm:text-3xl font-heading font-black text-navy">
-          How We Quote Your Space
-        </h2>
-        <p class="text-sm sm:text-base text-navy/70 leading-relaxed">
-          In the UK, every property is distinctive. Rather than surprising you with rigid upfront figures that don't match your needs, Bright2Shine assesses:
-        </p>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left pt-4">
-          <div class="bg-white p-5 rounded-2xl border border-sand-dark/20 shadow-sm">
-            <h4 class="font-heading font-bold text-sm text-navy mb-1">1. Size & Layout</h4>
-            <p class="text-xs text-navy/60">Number of bedrooms, bathrooms, receptions and square footage.</p>
-          </div>
-          <div class="bg-white p-5 rounded-2xl border border-sand-dark/20 shadow-sm">
-            <h4 class="font-heading font-bold text-sm text-navy mb-1">2. Level of Dirt / Need</h4>
-            <p class="text-xs text-navy/60">Standard upkeep vs. heavy post-tenancy grease or post-builder dust.</p>
-          </div>
-          <div class="bg-white p-5 rounded-2xl border border-sand-dark/20 shadow-sm">
-            <h4 class="font-heading font-bold text-sm text-navy mb-1">3. Preferred Frequency</h4>
-            <p class="text-xs text-navy/60">Weekly, fortnightly discounts or one-time deep clean rates.</p>
-          </div>
+        <!-- Fixed Property Size Table -->
+        <div class="bg-white rounded-3xl p-6 sm:p-10 border border-sand-dark/30 shadow-soft overflow-x-auto">
+          <h3 class="text-xl font-heading font-black text-navy mb-6">Property Package Pricing Table</h3>
+          <table class="w-full text-left text-sm">
+            <thead>
+              <tr class="border-b border-sand-dark/30 text-xs font-bold text-navy/60 uppercase bg-sand/30">
+                <th class="py-3 px-4 rounded-l-lg">Property Size</th>
+                <th class="py-3 px-4">Light Cleaning</th>
+                <th class="py-3 px-4 bg-amber-50/60 text-amber-900">End of Tenancy</th>
+                <th class="py-3 px-4 rounded-r-lg bg-emerald-50/60 text-emerald-900">Tenancy + Carpet Steam</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-sand-dark/20 text-navy">
+              <tr *ngFor="let t of propertyPricing" class="hover:bg-sand/20">
+                <td class="py-3 px-4 font-bold text-xs sm:text-sm">{{ t.propertyType }}</td>
+                <td class="py-3 px-4">{{ t.lightPrice }}</td>
+                <td class="py-3 px-4 font-bold text-brand bg-amber-50/30">{{ t.tenancyPrice }}</td>
+                <td class="py-3 px-4 font-black text-emerald-700 bg-emerald-50/30">{{ t.tenancyWithCarpetPrice }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-        <div class="pt-4">
-          <a routerLink="/contact" class="inline-block px-7 py-3.5 rounded-xl bg-navy text-white font-heading font-bold text-sm shadow hover:bg-navy-light transition">
-            Get Your Exact Quote in 5 Minutes
-          </a>
-        </div>
       </div>
     </section>
 
@@ -231,11 +222,14 @@ import { Tilt3DDirective } from '../../shared/directives/tilt.directive';
           Need A Bespoke Cleaning Plan?
         </h2>
         <p class="text-sand/80 text-sm">
-          Speak with our team today on <strong class="text-white">{{ company.phone1 }}</strong> or submit a quick quote request.
+          Speak with our team today on <strong class="text-white">{{ company.phone1 }}</strong> or email <strong class="text-white">{{ company.email }}</strong> / <strong class="text-white">{{ company.email2 }}</strong>.
         </p>
-        <div class="pt-2">
+        <div class="pt-2 flex flex-wrap justify-center gap-4">
           <a routerLink="/contact" class="px-8 py-3.5 rounded-xl bg-brand text-white font-heading font-bold text-sm shadow-glow hover:bg-brand-hover transition inline-block">
             Contact Our Team Now
+          </a>
+          <a [href]="'tel:' + company.phone1Raw" class="px-8 py-3.5 rounded-xl bg-white text-navy font-heading font-bold text-sm transition inline-block">
+            Call {{ company.phone1 }}
           </a>
         </div>
       </div>
@@ -245,6 +239,10 @@ import { Tilt3DDirective } from '../../shared/directives/tilt.directive';
 export class ServicesComponent implements OnInit {
   company = COMPANY_DETAILS;
   allServices = SERVICES;
+  roomProcess = ROOM_PROCESS;
+  hourlyPricing = HOURLY_PRICING;
+  extraAddons = EXTRA_CLEANING_ADDONS;
+  propertyPricing = PROPERTY_PRICING_TABLE;
   faqs = FAQS;
 
   activeFilter = signal<'all' | 'residential' | 'commercial' | 'specialist'>('all');

@@ -6,23 +6,50 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        primary: {
+          DEFAULT: '#1B2B3A', // Deep navy
+          light: '#263d52',
+          dark: '#131e28'
+        },
         navy: {
-          DEFAULT: '#1B2B3C',
-          light: '#24374D',
-          dark: '#111D2A',
-          deep: '#0B131C'
+          DEFAULT: '#1B2B3A', // Deep navy (aliases for backward compatibility)
+          light: '#263d52',
+          dark: '#131e28',
+          deep: '#0e161e'
+        },
+        accent: {
+          DEFAULT: '#B5441A', // Burnt orange
+          hover: '#9a3814',
+          dark: '#7e2d10',
+          light: '#cf5a2d'
         },
         brand: {
-          DEFAULT: '#B5441A',
-          dark: '#933412',
-          hover: '#CD4F20',
-          light: '#E87B35',
-          warm: '#F2995D'
+          DEFAULT: '#B5441A', // Burnt orange (aliases for backward compatibility)
+          hover: '#9a3814',
+          dark: '#7e2d10',
+          light: '#cf5a2d',
+          ice: '#F3EFEA'
+        },
+        aqua: {
+          DEFAULT: '#3BA8B5', // Fresh aqua
+          hover: '#31929d',
+          light: '#5fc3ce',
+          ice: '#eaf6f8'
+        },
+        body: {
+          DEFAULT: '#2B2F33', // Charcoal
+          muted: '#525a61'
+        },
+        surface: {
+          DEFAULT: '#FAFAF8', // Soft white
+          alt: '#F3EFEA',     // Light warm grey
+          warm: '#F3EFEA',
+          white: '#FFFFFF'
         },
         sand: {
-          light: '#FAF8F5',
-          DEFAULT: '#F3E6DA',
-          dark: '#E5D2C1'
+          light: '#FFFFFF',
+          DEFAULT: '#FAFAF8',
+          dark: '#F3EFEA'
         }
       },
       fontFamily: {
@@ -30,33 +57,28 @@ module.exports = {
         heading: ['Poppins', 'Montserrat', 'sans-serif']
       },
       boxShadow: {
-        'soft': '0 10px 30px -5px rgba(27, 43, 60, 0.08)',
-        'float': '0 20px 40px -10px rgba(27, 43, 60, 0.15)',
-        'glow': '0 0 25px rgba(232, 123, 53, 0.35)',
-        'card-3d': '0 25px 50px -12px rgba(181, 68, 26, 0.2)'
+        'soft': '0 10px 30px -5px rgba(27, 43, 58, 0.08)',
+        'float': '0 20px 40px -10px rgba(27, 43, 58, 0.15)',
+        'glow': '0 0 25px rgba(181, 68, 26, 0.35)',
+        'card-3d': '0 20px 45px -10px rgba(27, 43, 58, 0.12)'
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-12px)' },
+          '50%': { transform: 'translateY(-10px)' },
         },
         floatSlow: {
           '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-          '50%': { transform: 'translateY(-18px) rotate(4deg)' },
-        },
-        twinkle: {
-          '0%, 100%': { opacity: '0.3', transform: 'scale(0.8)' },
-          '50%': { opacity: '1', transform: 'scale(1.2)' },
+          '50%': { transform: 'translateY(-15px) rotate(3deg)' },
         },
         pulseGlow: {
-          '0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
-          '50%': { opacity: '0.9', transform: 'scale(1.08)' },
+          '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+          '50%': { opacity: '0.7', transform: 'scale(1.05)' },
         }
       },
       animation: {
         float: 'float 5s ease-in-out infinite',
         floatSlow: 'floatSlow 7s ease-in-out infinite',
-        twinkle: 'twinkle 3s ease-in-out infinite',
         pulseGlow: 'pulseGlow 4s ease-in-out infinite'
       }
     },
