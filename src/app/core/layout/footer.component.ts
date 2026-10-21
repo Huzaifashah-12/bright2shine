@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { COMPANY_DETAILS, SERVICES } from '../../data/site-data';
+import { COMPANY_DETAILS } from '../../data/site-data';
+import { ModalService, PolicyModalType } from '../../shared/services/modal.service';
 
 @Component({
   selector: 'app-footer',
@@ -15,159 +16,217 @@ import { COMPANY_DETAILS, SERVICES } from '../../data/site-data';
       <div class="absolute bottom-0 left-10 w-80 h-80 bg-[#3BA8B5]/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <!-- 4 Column Grid (Section 3.3) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
           
-          <!-- Company Bio & Logo -->
+          <!-- Column 1: Brand -->
           <div class="space-y-4">
             <div class="flex items-center gap-3">
               <div class="w-12 h-12 rounded-2xl bg-white overflow-hidden p-1 shadow-md border border-[#F3EFEA] flex items-center justify-center">
-                <img src="logo.jpg" alt="Bright2Shine Main Logo" class="w-full h-full object-contain" />
+                <img src="logo.png" alt="Bright2Shine Logo" class="w-full h-full object-contain" />
               </div>
               <div>
                 <span class="text-2xl font-heading font-black text-white tracking-tight">
                   Bright<span class="text-[#B5441A]">2</span>Shine
                 </span>
                 <span class="block text-[11px] font-semibold uppercase tracking-wider text-white/60">
-                  Spotless Spaces. Brighter Days.
+                  {{ company.tagline }}
                 </span>
               </div>
             </div>
 
-            <p class="text-white/75 text-sm leading-relaxed">
-              London & Essex’s trusted professional cleaning specialists. Fully insured, DBS-vetted staff delivering domestic, commercial, deep cleans, and end of tenancy perfection.
+            <p class="text-white/80 text-sm leading-relaxed">
+              Commercial and domestic cleaning across East London &amp; Essex.
             </p>
 
-            <div class="pt-2 flex flex-wrap gap-2">
-              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white border border-white/10">
-                🛡️ £2M Public Liability
-              </span>
-              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-[#3BA8B5] border border-white/10">
-                ⭐ 5.0 Star Rated
-              </span>
+            <!-- Insurance Badge (Section 3.4) -->
+            <div class="pt-2">
+              <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-white/85 space-y-1">
+                <div class="flex items-center gap-1.5 font-bold text-[#3BA8B5]">
+                  <span>🛡️</span>
+                  <span>Fully Insured</span>
+                </div>
+                <p class="text-[11px] text-white/75 leading-snug">
+                  {{ company.insuranceText }}
+                </p>
+              </div>
             </div>
           </div>
 
-          <!-- Quick Navigation -->
+          <!-- Column 2: Services -->
           <div>
             <h4 class="font-heading font-bold text-white text-base mb-5 flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-[#B5441A]"></span>
-              Quick Links
+              Services
             </h4>
-            <ul class="space-y-3 text-sm">
+            <ul class="space-y-2.5 text-sm text-white/80">
               <li>
-                <a routerLink="/" class="text-white/80 hover:text-[#3BA8B5] transition flex items-center gap-2">
-                  <span class="text-[#B5441A] text-xs">›</span> Home Overview
+                <a routerLink="/services" fragment="office" class="hover:text-[#3BA8B5] transition flex items-center gap-2">
+                  <span class="text-[#B5441A] text-xs">›</span> Office Cleaning
                 </a>
               </li>
               <li>
-                <a routerLink="/services" class="text-white/80 hover:text-[#3BA8B5] transition flex items-center gap-2">
-                  <span class="text-[#B5441A] text-xs">›</span> All Cleaning Services
+                <a routerLink="/services" fragment="communal" class="hover:text-[#3BA8B5] transition flex items-center gap-2">
+                  <span class="text-[#B5441A] text-xs">›</span> Communal Areas
                 </a>
               </li>
               <li>
-                <a routerLink="/cleaning-process" class="text-white/80 hover:text-[#3BA8B5] transition flex items-center gap-2">
-                  <span class="text-[#B5441A] text-xs">›</span> Cleaning Process
+                <a routerLink="/services" fragment="hostels" class="hover:text-[#3BA8B5] transition flex items-center gap-2">
+                  <span class="text-[#B5441A] text-xs">›</span> Hostels &amp; Supported Housing
                 </a>
               </li>
               <li>
-                <a routerLink="/" fragment="pricing" class="text-white/80 hover:text-[#3BA8B5] transition flex items-center gap-2">
-                  <span class="text-[#B5441A] text-xs">›</span> Transparent Pricing
+                <a routerLink="/services" fragment="after-builders" class="hover:text-[#3BA8B5] transition flex items-center gap-2">
+                  <span class="text-[#B5441A] text-xs">›</span> After Builders
                 </a>
               </li>
               <li>
-                <a routerLink="/reviews" class="text-white/80 hover:text-[#3BA8B5] transition flex items-center gap-2">
-                  <span class="text-[#B5441A] text-xs">›</span> Verified Customer Reviews (5.0 ★)
+                <a routerLink="/services" fragment="home-cleaning" class="hover:text-[#3BA8B5] transition flex items-center gap-2">
+                  <span class="text-[#B5441A] text-xs">›</span> Home Cleaning
                 </a>
               </li>
               <li>
-                <a routerLink="/contact" class="text-white/80 hover:text-[#3BA8B5] transition flex items-center gap-2">
-                  <span class="text-[#B5441A] text-xs">›</span> Contact & Head Office
+                <a routerLink="/services" fragment="pricing" class="hover:text-[#3BA8B5] transition flex items-center gap-2">
+                  <span class="text-[#B5441A] text-xs">›</span> End of Tenancy
+                </a>
+              </li>
+              <li>
+                <a routerLink="/services" fragment="pricing" class="hover:text-[#3BA8B5] transition flex items-center gap-2">
+                  <span class="text-[#B5441A] text-xs">›</span> Carpet &amp; Upholstery
                 </a>
               </li>
             </ul>
           </div>
 
-          <!-- Services List -->
+          <!-- Column 3: Company -->
           <div>
             <h4 class="font-heading font-bold text-white text-base mb-5 flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-[#B5441A]"></span>
-              Our Services
+              Company
             </h4>
-            <ul class="space-y-3 text-sm">
-              <li *ngFor="let s of services.slice(0, 6)">
-                <a [routerLink]="['/services']" [fragment]="s.id" class="text-white/80 hover:text-[#3BA8B5] transition flex items-center gap-2">
-                  <span class="text-[#B5441A] text-xs">›</span> {{ s.title }}
+            <ul class="space-y-2.5 text-sm text-white/80">
+              <li>
+                <a routerLink="/" fragment="about" class="hover:text-[#3BA8B5] transition flex items-center gap-2">
+                  <span class="text-[#B5441A] text-xs">›</span> About us
+                </a>
+              </li>
+              <li>
+                <a routerLink="/cleaning-process" class="hover:text-[#3BA8B5] transition flex items-center gap-2">
+                  <span class="text-[#B5441A] text-xs">›</span> How We Work
+                </a>
+              </li>
+              <li>
+                <a routerLink="/services" fragment="pricing" class="hover:text-[#3BA8B5] transition flex items-center gap-2">
+                  <span class="text-[#B5441A] text-xs">›</span> Prices
+                </a>
+              </li>
+              <li>
+                <a routerLink="/contact" fragment="quote" class="hover:text-[#3BA8B5] transition flex items-center gap-2 font-semibold text-[#B5441A]">
+                  <span class="text-[#B5441A] text-xs">›</span> Get a Free Quote
+                </a>
+              </li>
+              <li>
+                <a routerLink="/contact" class="hover:text-[#3BA8B5] transition flex items-center gap-2">
+                  <span class="text-[#B5441A] text-xs">›</span> Contact
                 </a>
               </li>
             </ul>
           </div>
 
-          <!-- Contact Details & Both Emails -->
+          <!-- Column 4: Get in touch -->
           <div>
             <h4 class="font-heading font-bold text-white text-base mb-5 flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-[#B5441A]"></span>
-              Get In Touch
+              Get in touch
             </h4>
-            <div class="space-y-3.5 text-sm text-white/85">
-              <p class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-[#3BA8B5] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                </svg>
-                <span>{{ company.address }}</span>
-              </p>
-
-              <p class="flex items-center gap-3">
-                <svg class="w-5 h-5 text-[#3BA8B5] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="space-y-3 text-sm text-white/85">
+              <!-- Phone -->
+              <div class="flex items-center gap-3">
+                <svg class="w-4 h-4 text-[#3BA8B5] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                 </svg>
-                <a [href]="'tel:' + company.phone1Raw" class="hover:text-[#3BA8B5] transition font-semibold text-white">
-                  {{ company.phone1 }} / {{ company.phone2 }}
+                <a [href]="'tel:' + company.phone1Raw" class="hover:text-[#3BA8B5] transition font-bold text-white">
+                  {{ company.phoneDisplay }}
                 </a>
-              </p>
+              </div>
 
-              <!-- Both Emails Displayed -->
+              <!-- General & Home email -->
               <div class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-[#3BA8B5] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg class="w-4 h-4 text-[#3BA8B5] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
-                <div class="flex flex-col gap-1">
-                  <a [href]="'mailto:' + company.email" class="hover:text-[#3BA8B5] transition text-white">
+                <div class="flex flex-col text-xs">
+                  <span class="text-white/60">General &amp; Home:</span>
+                  <a [href]="'mailto:' + company.email" class="hover:text-[#3BA8B5] transition text-white font-medium">
                     {{ company.email }}
-                  </a>
-                  <a [href]="'mailto:' + company.email2" class="hover:text-[#3BA8B5] transition text-white">
-                    {{ company.email2 }}
                   </a>
                 </div>
               </div>
 
-              <p class="flex items-center gap-3">
-                <svg class="w-5 h-5 text-[#3BA8B5] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              <!-- Commercial email -->
+              <div class="flex items-start gap-3">
+                <svg class="w-4 h-4 text-[#3BA8B5] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                 </svg>
-                <span>{{ company.openingHours }}</span>
-              </p>
+                <div class="flex flex-col text-xs">
+                  <span class="text-white/60">Commercial Contracts:</span>
+                  <a [href]="'mailto:' + company.emailCommercial" class="hover:text-[#3BA8B5] transition text-white font-medium">
+                    {{ company.emailCommercial }}
+                  </a>
+                </div>
+              </div>
+
+              <!-- Opening hours -->
+              <div class="pt-1 text-xs text-white/70 space-y-0.5">
+                <p class="font-semibold text-white/90">Office hours: {{ company.officeHours }}</p>
+                <p class="text-[11px] text-[#3BA8B5]">{{ company.cleaningAvailability }}</p>
+              </div>
+
+              <!-- Areas -->
+              <div class="pt-2 border-t border-white/10 text-[11px] text-white/70">
+                <strong class="text-white">Areas:</strong> {{ company.standardAreasString }}
+              </div>
             </div>
           </div>
 
         </div>
 
-        <!-- Areas Covered Row -->
-        <div class="py-6 border-t border-b border-white/10 text-xs text-white/70 flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center gap-2">
-            <span class="font-bold text-white uppercase tracking-wider">Service Coverage:</span>
-            <span>Ilford, Barking, Redbridge, Dagenham, Romford, Stratford, Forest Gate, East Ham, Docklands & Greater London</span>
-          </div>
-          <span class="text-[#3BA8B5] font-medium">Postcodes: IG1-IG11, RM1-RM14, E1-E20</span>
-        </div>
+        <!-- Bottom bar (Legal line + working pop-up links: Section 3.3) -->
+        <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-xs text-white/70 gap-4">
+          <!-- Legal Line -->
+          <p class="text-center md:text-left text-[11px] text-white/60">
+            {{ company.legalLine }}
+          </p>
 
-        <!-- Bottom Copyright & Disclaimer -->
-        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-white/60 gap-4">
-          <p>© 2026 Bright2Shine Ltd. All Rights Reserved. Registered in England & Wales.</p>
-          <div class="flex space-x-6">
-            <span class="hover:text-white cursor-pointer transition">Privacy Policy</span>
-            <span class="hover:text-white cursor-pointer transition">Terms of Service</span>
-            <span class="hover:text-white cursor-pointer transition">Insurance Verification</span>
+          <!-- Working Pop-up window links -->
+          <div class="flex flex-wrap items-center justify-center gap-4 text-xs">
+            <button 
+              type="button" 
+              (click)="openModal('privacy')" 
+              class="hover:text-white underline transition focus:outline-none">
+              Privacy Policy
+            </button>
+            <span class="text-white/20">•</span>
+            <button 
+              type="button" 
+              (click)="openModal('terms')" 
+              class="hover:text-white underline transition focus:outline-none">
+              Terms &amp; Conditions
+            </button>
+            <span class="text-white/20">•</span>
+            <button 
+              type="button" 
+              (click)="openModal('cookie')" 
+              class="hover:text-white underline transition focus:outline-none">
+              Cookie Policy
+            </button>
+            <span class="text-white/20">•</span>
+            <a 
+              href="insurance-certificate.pdf" 
+              target="_blank"
+              class="hover:text-[#3BA8B5] underline transition">
+              Insurance Certificate
+            </a>
           </div>
         </div>
 
@@ -177,5 +236,9 @@ import { COMPANY_DETAILS, SERVICES } from '../../data/site-data';
 })
 export class FooterComponent {
   company = COMPANY_DETAILS;
-  services = SERVICES;
+  modalService = inject(ModalService);
+
+  openModal(type: PolicyModalType): void {
+    this.modalService.open(type);
+  }
 }

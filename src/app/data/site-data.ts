@@ -1,16 +1,29 @@
-export interface ServiceItem {
+export interface CommercialServiceItem {
+  id: string;
+  anchor: string;
+  title: string;
+  subtitle: string;
+  priceTag: string;
+  rateInfo: string;
+  minHours: string;
+  targetAudience: string;
+  image: string;
+  includesEveryVisit?: string[];
+  includesWeekly?: string[];
+  includesMonthly?: string[];
+  includedItems?: string[];
+}
+
+export interface HomeServiceCard {
   id: string;
   title: string;
-  category: 'residential' | 'commercial' | 'specialist';
-  shortDesc: string;
+  price: string;
+  rateInfo: string;
   description: string;
+  tagline: string;
   icon: string;
-  popular?: boolean;
-  features: string[];
-  startingPrice: string;
-  turnaround: string;
-  image?: string;
-  checklist?: string[];
+  badge?: string;
+  linkText: string;
 }
 
 export interface RoomProcessItem {
@@ -22,550 +35,560 @@ export interface RoomProcessItem {
   description: string;
 }
 
-export interface PricingPackageItem {
-  id: string;
-  title: string;
-  rate: string;
-  unit: string;
-  popular?: boolean;
-  featured?: boolean;
-  badge?: string;
-  description: string;
-  features: string[];
+export interface CommercialPriceRow {
+  service: string;
+  price: string;
+  minimum: string;
+  bestFor: string;
+}
+
+export interface HomePriceRow {
+  service: string;
+  price: string;
+  minimum: string;
+  bestFor: string;
 }
 
 export interface PropertyPricingTier {
   propertyType: string;
-  lightPrice: string;
+  standardPrice: string;
   tenancyPrice: string;
   tenancyWithCarpetPrice: string;
+  afterBuildersPrice: string;
 }
+
+export interface SingleJobItem {
+  category: 'oven-kitchen' | 'windows';
+  item: string;
+  price: string;
+}
+
+export interface ExtraItem {
+  category: 'carpets' | 'upholstery' | 'addons';
+  item: string;
+  price: string;
+  detail?: string;
+}
+
+export const COMPANY_DETAILS = {
+  name: 'Bright2Shine',
+  legalName: 'Bright2Shine Ltd',
+  tagline: 'Spotless spaces. Brighter days.',
+  phone1: '07494 809603',
+  phone1Raw: '+447494809603',
+  phoneDisplay: '07494 809603',
+  whatsappRaw: '447494809603',
+  whatsappLink: 'https://wa.me/447494809603?text=Hi%20Bright2Shine%2C%20I%27d%20like%20a%20free%20cleaning%20quote.',
+  email: 'info@bright2shine.com',
+  emailCommercial: 'contact@bright2shine.com',
+  officeHours: 'Mon–Sat, 8:00am – 7:00pm',
+  cleaningAvailability: 'Cleaning available 7 days, including early mornings, evenings and weekends.',
+  areasList: [
+    'Barking',
+    'Dagenham',
+    'Ilford',
+    'Redbridge',
+    'Romford',
+    'East Ham',
+    'Stratford',
+    'Canary Wharf',
+    'nearby Essex'
+  ],
+  standardAreasString: 'Barking · Dagenham · Ilford · Redbridge · Romford · East Ham · Stratford · Canary Wharf · nearby Essex',
+  insuranceText: 'Fully insured: £5m / £10m Public Liability · £10m Employers\' Liability. Certificates available on request.',
+  staffVettingText: 'Vetted and referenced staff',
+  reCleanPromise: 'Free re-clean within 48 hours if anything is missed',
+  legalLine: '© 2026 Bright2Shine Ltd. Registered in England & Wales, company no. [COMPANY NUMBER] . Registered office: [REGISTERED OFFICE ADDRESS] .'
+};
+
+export const COMMERCIAL_SERVICES: CommercialServiceItem[] = [
+  {
+    id: 'office',
+    anchor: 'office',
+    title: 'Office Cleaning',
+    subtitle: 'from £21/hr · min. 3 hrs per visit',
+    priceTag: 'from £21/hr',
+    rateInfo: 'min. 3 hrs per visit',
+    minHours: '3 hrs / visit',
+    targetAudience: 'Offices, shops, clinics, corporate workspaces, and business centres.',
+    image: 'images/bg2.jpg',
+    includesEveryVisit: [
+      'Empty bins and replace liners',
+      'Vacuum carpets and mop hard floors',
+      'Wipe and sanitise desks, phones and keyboards (clear desks)',
+      'Clean and restock washrooms',
+      'Clean kitchen and breakout areas, sinks and microwave exterior',
+      'Wipe door handles, light switches and other high-touch points',
+      'Spot-clean internal glass'
+    ],
+    includesWeekly: [
+      'Dust skirting boards, ledges and window sills',
+      'Clean inside microwaves',
+      'Polish meeting-room tables',
+      'Clean glass doors'
+    ],
+    includesMonthly: [
+      'High-level dusting',
+      'Descale washrooms',
+      'Clean inside fridges',
+      'Carpet spot treatment',
+      'Internal windows'
+    ]
+  },
+  {
+    id: 'communal',
+    anchor: 'communal',
+    title: 'Communal Areas (Blocks of Flats)',
+    subtitle: 'from £21/hr · min. 3 hrs per visit',
+    priceTag: 'from £21/hr',
+    rateInfo: 'min. 3 hrs per visit',
+    minHours: '3 hrs / visit',
+    targetAudience: 'Property managers, resident management companies (RMCs), housing associations, and landlords.',
+    image: 'images/service-area-spree.jpg',
+    includedItems: [
+      'Sweep and mop stairs, landings and hallways',
+      'Vacuum entrance mats',
+      'Wipe handrails, door handles, intercom panels and lift interiors',
+      'Clean entrance glass',
+      'Clean bin stores',
+      'Remove cobwebs',
+      'Visit report with photos sent to the managing agent'
+    ]
+  },
+  {
+    id: 'hostels',
+    anchor: 'hostels',
+    title: 'Hostels, HMOs & Supported Housing',
+    subtitle: 'from £22/hr · min. 3 hrs per visit',
+    priceTag: 'from £22/hr',
+    rateInfo: 'min. 3 hrs per visit',
+    minHours: '3 hrs / visit',
+    targetAudience: 'Supported living providers, student accommodations, emergency hostels, and HMO landlords.',
+    image: 'images/county-bg.jpg',
+    includedItems: [
+      'Shared kitchens (worktops, hobs, sinks, fridge exteriors)',
+      'Shared bathrooms and toilets (descale and disinfect)',
+      'Corridors, stairs and communal lounges',
+      'Bin areas and refuse rooms',
+      'Room turnaround cleans between residents',
+      'Daily or weekly schedules tailored to resident turnover'
+    ]
+  },
+  {
+    id: 'schools',
+    anchor: 'schools',
+    title: 'Schools, Clinics & Places of Worship',
+    subtitle: 'from £21/hr · min. 3 hrs per visit',
+    priceTag: 'from £21/hr',
+    rateInfo: 'min. 3 hrs per visit',
+    minHours: '3 hrs / visit',
+    targetAudience: 'Primary & secondary schools, nurseries, medical centres, dental clinics, churches, mosques, and community centres.',
+    image: 'images/home-3.jpg',
+    includedItems: [
+      'Classrooms, waiting areas and prayer halls',
+      'Washrooms and wudu areas (deep disinfection)',
+      'Floors and carpets (vacuumed and mopped)',
+      'High-touch points (switches, rails, push-plates sanitised)',
+      'Kitchens and staff rooms',
+      'Flexible cleaning outside opening and prayer times'
+    ]
+  },
+  {
+    id: 'after-builders',
+    anchor: 'after-builders',
+    title: 'After Builders Cleaning',
+    subtitle: '£25/hr · min. 4 hrs',
+    priceTag: '£25/hr',
+    rateInfo: 'min. 4 hrs',
+    minHours: '4 hrs',
+    targetAudience: 'Main contractors, fit-out specialists, refurbishers, interior designers, and commercial property owners.',
+    image: 'images/domestic-1.jpg',
+    includedItems: [
+      'Remove builders\' dust from all surfaces',
+      'Clean windows, frames and sills',
+      'Remove paint spots, silicone and stickers',
+      'Vacuum and mop hard floors',
+      'Clean kitchens and washrooms ready for immediate handover and use'
+    ]
+  },
+  {
+    id: 'windows',
+    anchor: 'windows',
+    title: 'Commercial Window Cleaning',
+    subtitle: 'Free Quote',
+    priceTag: 'Free quote',
+    rateInfo: 'Scheduled rounds',
+    minHours: 'Site assessment',
+    targetAudience: 'Offices, retail high-street shops, restaurants, cafes, showrooms, and managed estates.',
+    image: 'images/domestic-4.jpg',
+    includedItems: [
+      'Office, shop and restaurant windows',
+      'Inside and outside glass detailing',
+      'Frames, sills and ledges washed down',
+      'Weekly, fortnightly or monthly regular rounds'
+    ]
+  }
+];
+
+export const HOME_SERVICE_CARDS: HomeServiceCard[] = [
+  {
+    id: 'regular',
+    title: 'Regular Domestic Cleaning',
+    price: '£20/hr',
+    rateInfo: 'min. 3 hrs',
+    tagline: 'Weekly or fortnightly. Same cleaner each visit.',
+    description: 'Reliable, consistent upkeep for your home. Same vetted cleaner every scheduled visit with products & equipment included.',
+    icon: 'home',
+    linkText: 'Book Regular Clean'
+  },
+  {
+    id: 'one-off',
+    title: 'One-Off House Clean',
+    price: '£22/hr',
+    rateInfo: 'min. 3 hrs',
+    tagline: 'Spring clean, before guests',
+    description: 'An intensive, top-to-bottom scrub perfect for pre-event prep, seasonal resets, or an overdue refresh.',
+    icon: 'sparkles',
+    linkText: 'Book One-Off Clean'
+  },
+  {
+    id: 'deep-clean',
+    title: 'Deep Cleaning',
+    price: '£24/hr',
+    rateInfo: 'min. 4 hrs',
+    tagline: 'Heavy build-up, first clean',
+    description: 'A thorough clean for homes that need extra attention: skirting boards, door frames, splashbacks, limescale, window tracks and high-touch areas.',
+    icon: 'shield',
+    badge: 'Detailed Care',
+    linkText: 'Book Deep Clean'
+  },
+  {
+    id: 'end-of-tenancy',
+    title: 'End of Tenancy Cleaning',
+    price: 'from £145',
+    rateInfo: 'Fixed price by size',
+    tagline: 'Tenants, landlords & agents',
+    description: 'A full top-to-bottom clean for tenants, landlords and agents. Includes oven, inside cupboards, fridge and internal windows. Free re-clean within 48 hours if anything is missed.',
+    icon: 'key',
+    badge: 'Deposit Guarantee',
+    linkText: 'Book Tenancy Clean'
+  }
+];
 
 export const ROOM_PROCESS: RoomProcessItem[] = [
   {
     id: 'bedroom',
     name: 'Bedroom Cleaning',
-    tagline: 'Peaceful, Allergen-Free Sleep Environment',
+    tagline: 'Peaceful, Fresh & Allergen-Free Sleep Environment',
     image: 'images/bedroom.jpg',
-    tasks: ['Bed Making & Linen Refresh', 'Thorough Dust Removal', 'Deep Carpet Vacuuming', 'Blind & Track Cleaning', 'Furniture & Wardrobe Dusting'],
-    description: 'We turn your bedroom into an immaculate retreat. Dust is eliminated from baseboards, lamp fixtures, and under beds so you breathe easy.'
+    tasks: [
+      'Bed making & linen refresh',
+      'Thorough dust removal across all surfaces',
+      'Deep carpet vacuuming under beds & furniture',
+      'Blind & track cleaning',
+      'Wardrobe exterior & skirting board detailing'
+    ],
+    description: 'We turn your bedroom into an immaculate retreat. Dust is eliminated from skirting boards, lamp fixtures, and under beds so you breathe easy.'
   },
   {
     id: 'kitchen',
     name: 'Kitchen Cleaning',
-    tagline: 'Food-Safe, Grease-Free Sanitisation',
+    tagline: 'Food-Safe, Grease-Free Sanitising',
     image: 'images/kitchen.jpg',
-    tasks: ['Countertop Disinfection', 'Sink & Tap Sanitizing', 'Floor Sweeping & Mopping', 'Appliance Exterior Degreasing', 'Cabinet Fronts Polished'],
-    description: 'Our pros tackle grease splatter, limescale, and grime on all cooking stations, ensuring a spotless and hygienic food prep space.'
+    tasks: [
+      'Worktop disinfection & degreasing',
+      'Sink & tap sanitising and descaling',
+      'Floor sweeping and thorough mopping',
+      'Appliance exterior degreasing',
+      'Cabinet fronts and splashback buffed spotless'
+    ],
+    description: 'Our cleaners tackle grease splatter, limescale, and grime on all cooking stations, ensuring a spotless and hygienic food prep space.'
   },
   {
     id: 'dining-room',
     name: 'Dining Room Cleaning',
     tagline: 'Spotless Elegance for Entertaining',
     image: 'images/dining-room.jpg',
-    tasks: ['Furniture & Table Polishing', 'Decoration & Chandelier Dusting', 'Hard Floor Mopping', 'Skirting Board Detailing', 'Glassware Display Buffing'],
-    description: 'Every seat, table surface, and accent piece is carefully dusted and polished, ready for warm family gatherings and dinner guests.'
+    tasks: [
+      'Dining table and chair polishing',
+      'Chandelier and light fitting dusting',
+      'Hard floor vacuuming and mopping',
+      'Skirting board and ledge detailing',
+      'Glassware display and sideboard buffing'
+    ],
+    description: 'Every seat, table surface, and accent piece is carefully dusted and polished, ready for family meals and dinner guests.'
   },
   {
     id: 'living-room',
     name: 'Living Room Cleaning',
     tagline: 'Fresh & Spotless Relaxation Hub',
     image: 'images/living-room.jpg',
-    tasks: ['Dust Removal Across All Surfaces', 'Decor Organization & Dusting', 'Deep Carpet & Rug Vacuuming', 'Sofa & Fabric Care', 'Window Sills & Corner Cobwebs'],
+    tasks: [
+      'Dust removal across all furniture and surfaces',
+      'Deep carpet and rug vacuuming',
+      'Sofa crevices and fabric care',
+      'Window sills and corner cobweb removal',
+      'Skirting boards and electronics wiped safely'
+    ],
     description: 'The heart of your home receives meticulous care. We vacuum sofa crevices, dust media setups safely, and clean high-touch areas.'
   },
   {
     id: 'bathroom',
     name: 'Bathroom Cleaning',
-    tagline: 'Hospital-Grade Descaling & Gleaming Shine',
+    tagline: 'Thorough Descaling & Gleaming Shine',
     image: 'images/bathroom.jpg',
-    tasks: ['Countertop & Sink Disinfection', 'Deep Toilet & Rim Descaling', 'Shower & Bath Refresh', 'Tile Grout & Floor Mopping', 'Mirror & Chrome Polishing'],
+    tasks: [
+      'Basin, taps and vanity unit sanitised',
+      'Deep toilet, rim and tile descaling',
+      'Shower glass descaled and bath refreshed',
+      'Tile grout buffed and floor mopped',
+      'Mirror and chrome polished to a smear-free shine'
+    ],
     description: 'Say goodbye to soap scum and limescale. We thoroughly disinfect sanitaryware, polish taps to a mirror finish, and leave tiles sparkling.'
   },
   {
     id: 'laundry-room',
     name: 'Laundry Room Cleaning',
-    tagline: 'Clean, Organized & Mould-Free Hygiene',
+    tagline: 'Clean, Organised & Mould-Free Hygiene',
     image: 'images/laundry-room.jpg',
-    tasks: ['Dust Removal on Shelving', 'Countertop Sanitisation', 'Washer & Dryer Wipe-Down', 'Utility Sink Disinfection', 'Floor Mopping & Lint Clean'],
+    tasks: [
+      'Dust removal on shelving and ledges',
+      'Worktop and utility sink disinfection',
+      'Washing machine and dryer exterior wipe-down',
+      'Rubber seal checks and lint trap clearance',
+      'Floor mopping and tile sanitising'
+    ],
     description: 'We keep your utility room functioning efficiently by cleaning appliance rubbers, removing trapped lint, and wiping all surfaces clean.'
   }
 ];
 
-export const SERVICES: ServiceItem[] = [
+export const COMMERCIAL_PRICING_TABLE: CommercialPriceRow[] = [
   {
-    id: 'domestic',
-    title: 'Regular Domestic Cleaning',
-    category: 'residential',
-    shortDesc: 'Regular cleaning on your terms: weekly, bi-weekly or monthly. Guaranteed cleanliness, flexible scheduling.',
-    description: 'Choosing the right house cleaner makes all the difference. At Bright2Shine, we personally meet and train all our cleaners. They don’t just maintain your home; they support you through every season with reliable, trustworthy care.',
-    icon: 'home',
-    popular: true,
-    features: [
-      'Kitchen sink, counters and exterior appliances cleaned',
-      'Bathroom deep wash, descaling & mirror polishing',
-      'Dusting and sanitising all accessible surfaces',
-      'Vacuuming and mopping hard floors',
-      'Bed making & linen changes upon request',
-      'Detergents provided per session (optional £10)'
-    ],
-    checklist: [
-      'Kitchen surfaces & hobs degreased',
-      'Bathrooms scrubbed & sanitized',
-      'Bedrooms dusted & beds made',
-      'Dining room polished',
-      'Living room vacuumed & straightened'
-    ],
-    startingPrice: '£15/hr',
-    turnaround: 'Weekly / Bi-Weekly / Monthly',
-    image: 'images/domestic-3.jpg'
+    service: 'Office & commercial: regular contract',
+    price: 'from £21/hr',
+    minimum: '3 hrs / visit',
+    bestFor: 'Offices, shops, clinics, schools'
   },
   {
-    id: 'one-off',
-    title: 'One-Off Cleaning Service',
-    category: 'residential',
-    shortDesc: 'Thorough one-time intensive cleaning service to refresh your entire property from top to bottom.',
-    description: 'Perfect for spring cleaning, post-renovation recovery, or getting ready for special events. We tackle hidden corners, dust buildup, and bring back the original shine of your home without ongoing contracts.',
-    icon: 'sparkles',
-    popular: true,
-    features: [
-      'Complete room-by-room intensive cleaning',
-      'High and low dusting including cobwebs',
-      'Doors, frames, skirting boards & switch plates',
-      'Deep kitchen and bathroom degreasing & descaling',
-      'Floors vacuumed and thoroughly mopped'
-    ],
-    startingPrice: '£19/hr',
-    turnaround: 'Flexible Booking',
-    image: 'images/domestic-1.jpg'
+    service: 'Office & commercial: one-off deep clean',
+    price: '£25/hr',
+    minimum: '4 hrs',
+    bestFor: 'Office moves, quarterly deep clean'
   },
   {
-    id: 'deep-cleaning',
-    title: 'Deep Cleaning Service',
-    category: 'residential',
-    shortDesc: 'Maintain sparkle with monthly deep cleaning. Allergy-free living guaranteed especially during warmer seasons.',
-    description: 'Our intensive deep clean targets accumulated grime, limescale, allergens, and bacteria. We hand-clean high-touch areas, baseboards, window tracks, and backsplash to restore pure hygiene.',
-    icon: 'sparkles',
-    features: [
-      'Thorough Dusting and Polishing',
-      'Detailed Hand Cleaning of High-Touch Areas',
-      'Baseboard & Skirting Board Cleaning',
-      'Vacuuming and Wipe Down of Window Tracks',
-      'Interior Door & Frame Cleaning',
-      'Sparkling Interior Window Cleaning',
-      'Kitchen Backsplash Deep Clean & Degrease',
-      'Full Ceiling Cobweb Removal'
-    ],
-    checklist: [
-      'Thorough Dusting and Polishing',
-      'Detailed Hand Cleaning of High-Touch Areas',
-      'Baseboard Cleaning',
-      'Vacuuming & Wipe Down of Window Tracks',
-      'Interior Door Cleaning',
-      'Sparkling Interior Window Cleaning',
-      'Kitchen Backsplash Deep Clean',
-      'Cobweb Removal'
-    ],
-    startingPrice: '£19/hr',
-    turnaround: 'Half-Day / Full-Day',
-    image: 'images/domestic-4.jpg'
+    service: 'Communal areas: blocks of flats',
+    price: 'from £21/hr',
+    minimum: '3 hrs / visit',
+    bestFor: 'Stairs, hallways, lifts, bin stores'
   },
   {
-    id: 'carpet',
-    title: 'Carpet Cleaning Service',
-    category: 'specialist',
-    shortDesc: 'Professional high-pressure hot water steam extraction reviving carpet fibres and eliminating allergens.',
-    description: 'Industrial-strength hot-water extraction penetrates deep into carpet fabrics to remove stubborn stains, pet dander, dirt mites, and persistent odours without damaging delicate fibres.',
-    icon: 'brush',
-    features: [
-      'Pre-treatment of stubborn spots & heavy foot-traffic areas',
-      'Hot-water steam extraction cleaning',
-      'Antibacterial odour neutralisation',
-      'Rapid drying technology (dry in 2-4 hours)',
-      'Safe for pets, toddlers, and wool blends'
-    ],
-    startingPrice: 'Starting from £90',
-    turnaround: '2-4 hr drying time',
-    image: 'images/home-3.jpg'
+    service: 'Hostels, HMOs & supported housing',
+    price: 'from £22/hr',
+    minimum: '3 hrs / visit',
+    bestFor: 'Shared kitchens, bathrooms, corridors'
   },
   {
-    id: 'upholstery',
-    title: 'Upholstery Cleaning Service',
-    category: 'specialist',
-    shortDesc: 'Gentle yet powerful fabric and leather sofa sanitisation removing stains, grease, and dust.',
-    description: 'Give your sofas, armchairs, and dining chairs a second life. We use pH-neutral, fabric-specific detergents that lift embedded dirt and food spills while preserving textile colour.',
-    icon: 'brush',
-    features: [
-      'Fabric assessment & color-fastness testing',
-      'Deep foam extraction & steam sanitisation',
-      'Grease, coffee, and ink stain treatments',
-      'Pet odour elimination & fresh fragrance application'
-    ],
-    startingPrice: 'From £45/armchair',
-    turnaround: 'Same-day available',
-    image: 'images/about-1.jpg'
+    service: 'After builders (commercial)',
+    price: '£25/hr',
+    minimum: '4 hrs',
+    bestFor: 'Fit-outs, refurbishments'
   },
   {
-    id: 'end-of-tenancy',
-    title: 'End of Tenancy Cleaning',
-    category: 'specialist',
-    shortDesc: 'Comprehensive deposit-back cleaning following estate agent checklists with 72-hour guarantee.',
-    description: 'Make sure you have a spotless space. Leave the cleaning to us and have a hassle-free move out or settle in. Backed by our free re-clean guarantee if anything is flagged by your inventory clerk.',
-    icon: 'key',
-    popular: true,
-    features: [
-      'Full internal kitchen cupboards & drawers',
-      'Oven, hob and extractor fan steam degreased',
-      'Fridge/freezer interior wiped and disinfected',
-      'Bathrooms descaled, bleached and sanitized',
-      'Internal windows, frames, sills & skirting boards',
-      'Option to bundle with Carpet Steam Cleaning'
-    ],
-    checklist: [
-      'Standard Cleaning Services',
-      'Oven Steam Cleaning',
-      'Refrigerator Interior Cleaning',
-      'Kitchen Drawer Organization (inside & out)',
-      'Bathroom Drawer Cleaning (inside & out)',
-      'Interior Window Cleaning (ground-level)',
-      'Backsplash Deep Cleaning',
-      'Trash Removal'
-    ],
-    startingPrice: 'From £125',
-    turnaround: 'Same-day / Next-day',
-    image: 'images/bg2.jpg'
+    service: 'Office, shop or restaurant windows',
+    price: 'Free quote',
+    minimum: 'Custom quote',
+    bestFor: 'Commercial premises'
   },
   {
-    id: 'ironing',
-    title: 'Ironing Services',
-    category: 'residential',
-    shortDesc: 'Crisp, crease-free garment pressing delivered by experienced professionals.',
-    description: 'Take the chore out of laundry day. Our reliable staff press shirts, trousers, dresses, and bed linens with precision, folded or hung just the way you like.',
-    icon: 'briefcase',
-    features: [
-      'Shirts, blouses, and trousers steam-pressed',
-      'Bed linen and tablecloth smoothing',
-      'Hanger placement or neat folding service',
-      'Can be combined with your regular domestic clean'
-    ],
-    startingPrice: '£15/hr',
-    turnaround: 'Flexible Service',
-    image: 'images/domestic-2.jpg'
-  },
-  {
-    id: 'disinfection',
-    title: 'Electrostatic Disinfection Service',
-    category: 'specialist',
-    shortDesc: 'Hospital-grade EPA-registered disinfection eradicating 99.9% of bacteria, viruses, and contaminants.',
-    description: 'Bright2Shine Electrostatic Disinfection Service is a powerful solution for homes and offices designed to eradicate germs, bacteria and viruses. Utilizing a safe, hospital-grade disinfectant our experts target and eliminate contaminants including coronaviruses, Norovirus, SARS, E. Coli, Salmonella, and more in 30-60 minutes.',
-    icon: 'sparkles',
-    features: [
-      'EPA-registered, pH-neutral disinfectant',
-      '100% harmless to people, pets, plants and environment',
-      'Diligent coverage of all high-touch surfaces',
-      '30 to 60 minute rapid turnaround depending on area size',
-      'Comprehensive pathogen and virus elimination'
-    ],
-    startingPrice: 'Custom Bespoke Quotes',
-    turnaround: '30-60 min session',
-    image: 'images/fg1.jpg'
-  },
-  {
-    id: 'office',
-    title: 'Office & Commercial Cleaning',
-    category: 'commercial',
-    shortDesc: 'Professional office and commercial cleaning in London tailored to your hours and standards.',
-    description: 'Bright2Shine sends dedicated professionals straight to your location in London. Cleaning pros will complete each and all tasks with diligence while taking your personal requirements into full consideration. We stand for high-end equipment and quality cleaning solutions that are not available in-store.',
-    icon: 'building',
-    features: [
-      'Desk, computer & tech surface sanitisation',
-      'Kitchenette, breakroom & microwave deep cleans',
-      'Restroom hygiene replenishment and sanitisation',
-      'Trash bins emptied, bags replaced & recycling sorted',
-      'Flexible out-of-hours, evening or weekend visits'
-    ],
-    startingPrice: 'Tailored Commercial Quotes',
-    turnaround: 'Daily / Evening / Weekends',
-    image: 'images/bg-1.jpg'
+    service: 'Contracts over 20 hrs / week',
+    price: 'Free site survey · written quote within 48 hrs',
+    minimum: 'Site visit',
+    bestFor: 'Daily / multi-site cleaning'
   }
 ];
 
-export const HOURLY_PRICING: PricingPackageItem[] = [
+export const HOME_PRICING_TABLE: HomePriceRow[] = [
   {
-    id: 'regular-domestic',
-    title: 'Regular Domestic Cleaning',
-    rate: '£15',
-    unit: '/hr',
-    description: 'Best for regular scheduled cleaning weekly, bi-weekly or monthly.',
-    features: [
-      'Flexible scheduling on your terms',
-      'Guaranteed cleanliness & same cleaner consistency',
-      'Kitchen, bathrooms, bedrooms & living room',
-      'Dusting, vacuuming & hard floor mopping',
-      'Eco-safe detergents available (+£10/session)'
-    ]
+    service: 'Regular domestic cleaning',
+    price: '£20/hr',
+    minimum: '3 hrs',
+    bestFor: 'Weekly or fortnightly. Same cleaner each visit.'
   },
   {
-    id: 'one-off',
-    title: 'One-Off Cleaning',
-    rate: '£19',
-    unit: '/hr',
-    featured: true,
-    badge: 'Popular Choice',
-    description: 'Ideal for seasonal spring cleans or a comprehensive property refresh.',
-    features: [
-      'Top-to-bottom thorough scrub',
-      'Inside accessible cupboards & skirting boards',
-      'Detailed bathroom descaling & tile buffing',
-      'Heavy dust & cobweb elimination',
-      'No recurring contract commitment'
-    ]
+    service: 'One-off house clean',
+    price: '£22/hr',
+    minimum: '3 hrs',
+    bestFor: 'Spring clean, before guests'
   },
   {
-    id: 'deep-clean',
-    title: 'Deep Cleaning',
-    rate: '£19',
-    unit: '/hr',
-    description: 'Maintain sparkle with monthly allergy-free living sanitisation.',
-    features: [
-      'Detailed hand cleaning of high-touch areas',
-      'Window tracks & interior glass cleaning',
-      'Kitchen backsplash deep clean & degrease',
-      'Baseboard & door frame detailing',
-      'EPA-registered disinfectants included'
-    ]
+    service: 'Deep clean',
+    price: '£24/hr',
+    minimum: '4 hrs',
+    bestFor: 'Heavy build-up, first clean'
   },
   {
-    id: 'carpet-clean',
-    title: 'Carpet Cleaning',
-    rate: '£90',
-    unit: 'starting from',
-    description: 'Industrial steam extraction removing embedded allergens & dirt.',
-    features: [
-      'High-pressure hot water extraction machinery',
-      'Stain pre-treatment & high-traffic recovery',
-      'Odour elimination & pet dander removal',
-      'Rapid drying in 2-4 hours',
-      'Wool and delicate fibre safe'
-    ]
+    service: 'Ironing',
+    price: '£16/hr',
+    minimum: 'Add-on only',
+    bestFor: 'With any home visit'
   },
   {
-    id: 'ironing-service',
-    title: 'Ironing Services',
-    rate: '£15',
-    unit: '/hr',
-    description: 'Professional pressing service for clothes, shirts & bed linens.',
-    features: [
-      'Expert steam-ironed garments',
-      'Folded or hung to your instructions',
-      'Delicate fabric handling',
-      'Can be scheduled alongside regular clean'
-    ]
+    service: 'Airbnb / short-let changeover',
+    price: 'from £55',
+    minimum: 'Fixed',
+    bestFor: 'Studio–1 bed £55 · 2 bed £70'
   }
 ];
 
-export const EXTRA_CLEANING_ADDONS = [
-  { item: 'Extra Toilet', price: '£30', note: 'Full sanitisation & descaling' },
-  { item: 'Extra Bathroom', price: '£40', note: 'Tiles, bath, shower & mirrors' },
-  { item: 'Balcony', price: '£50', note: 'Swept, glass wiped & railings washed' },
-  { item: 'Personal Items Inside (Clean Around)', price: '£80', note: 'Carefully working around personal belongings' }
+export const FIXED_PROPERTY_PRICING_TABLE: PropertyPricingTier[] = [
+  { propertyType: 'Studio flat', standardPrice: '£110', tenancyPrice: '£145', tenancyWithCarpetPrice: '£235', afterBuildersPrice: '£170' },
+  { propertyType: '1 bedroom flat', standardPrice: '£125', tenancyPrice: '£185', tenancyWithCarpetPrice: '£260', afterBuildersPrice: '£215' },
+  { propertyType: '2 bedroom flat', standardPrice: '£150', tenancyPrice: '£235', tenancyWithCarpetPrice: '£305', afterBuildersPrice: '£265' },
+  { propertyType: '3 bedroom flat', standardPrice: '£170', tenancyPrice: '£275', tenancyWithCarpetPrice: '£355', afterBuildersPrice: '£300' },
+  { propertyType: '4 bedroom flat', standardPrice: '£190', tenancyPrice: '£320', tenancyWithCarpetPrice: '£405', afterBuildersPrice: '£340' },
+  { propertyType: '5 bedroom flat', standardPrice: '£215', tenancyPrice: '£380', tenancyWithCarpetPrice: '£455', afterBuildersPrice: 'Free survey' },
+  { propertyType: '1 bedroom house', standardPrice: '£135', tenancyPrice: '£230', tenancyWithCarpetPrice: '£315', afterBuildersPrice: '£265' },
+  { propertyType: '2 bedroom house', standardPrice: '£165', tenancyPrice: '£255', tenancyWithCarpetPrice: '£335', afterBuildersPrice: '£330' },
+  { propertyType: '3 bedroom house', standardPrice: '£190', tenancyPrice: '£305', tenancyWithCarpetPrice: '£385', afterBuildersPrice: '£355' },
+  { propertyType: '4 bedroom house', standardPrice: '£210', tenancyPrice: '£350', tenancyWithCarpetPrice: '£435', afterBuildersPrice: 'Free survey' },
+  { propertyType: '5 bedroom house', standardPrice: '£235', tenancyPrice: '£395', tenancyWithCarpetPrice: '£485', afterBuildersPrice: 'Free survey' }
 ];
 
-export const PROPERTY_PRICING_TABLE: PropertyPricingTier[] = [
-  { propertyType: 'Studio Flat', lightPrice: '£115', tenancyPrice: '£125', tenancyWithCarpetPrice: '£240' },
-  { propertyType: '1 Bedroom Flat', lightPrice: '£130', tenancyPrice: '£190', tenancyWithCarpetPrice: '£265' },
-  { propertyType: '2 Bedroom Flat', lightPrice: '£155', tenancyPrice: '£230', tenancyWithCarpetPrice: '£295' },
-  { propertyType: '3 Bedroom Flat', lightPrice: '£175', tenancyPrice: '£270', tenancyWithCarpetPrice: '£365' },
-  { propertyType: '4 Bedroom Flat', lightPrice: '£195', tenancyPrice: '£320', tenancyWithCarpetPrice: '£410' },
-  { propertyType: '5 Bedroom Flat', lightPrice: '£220', tenancyPrice: '£380', tenancyWithCarpetPrice: '£455' },
-  { propertyType: '6 Bedroom Flat', lightPrice: '£235', tenancyPrice: 'Custom Quote', tenancyWithCarpetPrice: 'Custom Quote' },
-  { propertyType: '2 Bedroom House', lightPrice: '£170', tenancyPrice: '£225', tenancyWithCarpetPrice: '£325' },
-  { propertyType: '3 Bedroom House', lightPrice: '£195', tenancyPrice: '£300', tenancyWithCarpetPrice: '£385' },
-  { propertyType: '4 Bedroom House', lightPrice: '£210', tenancyPrice: '£350', tenancyWithCarpetPrice: '£435' },
-  { propertyType: '5 Bedroom House', lightPrice: '£240', tenancyPrice: '£415', tenancyWithCarpetPrice: '£495' },
-  { propertyType: '6 Bedroom House', lightPrice: '£255', tenancyPrice: 'Custom Quote', tenancyWithCarpetPrice: 'Custom Quote' }
+export const SINGLE_JOBS_KITCHEN: SingleJobItem[] = [
+  { category: 'oven-kitchen', item: 'Single oven', price: '£55' },
+  { category: 'oven-kitchen', item: 'Double oven', price: '£75' },
+  { category: 'oven-kitchen', item: 'Range cooker', price: 'from £95' },
+  { category: 'oven-kitchen', item: 'Hob or extractor (with oven)', price: '+£20 each' },
+  { category: 'oven-kitchen', item: 'Kitchen deep clean', price: '£80' },
+  { category: 'oven-kitchen', item: 'Bathroom deep clean', price: '£55' },
+  { category: 'oven-kitchen', item: 'Fridge / freezer inside', price: '£25' }
 ];
 
-export interface TestimonialItem {
-  id: string;
-  name: string;
-  location: string;
-  service: string;
-  category: 'residential' | 'tenancy' | 'commercial' | 'specialist';
-  rating: number;
-  date: string;
-  quote: string;
-  avatarText: string;
-  avatarUrl: string;
-  verifiedPlatform: string;
-}
+export const SINGLE_JOBS_WINDOWS: SingleJobItem[] = [
+  { category: 'windows', item: 'Exterior: flat or 1–2 bed house', price: 'from £30' },
+  { category: 'windows', item: 'Exterior: 3 bed house', price: '£40' },
+  { category: 'windows', item: 'Exterior: 4+ bed house', price: 'from £50' },
+  { category: 'windows', item: 'Internal windows (with any clean)', price: '+£25' },
+  { category: 'windows', item: 'Office, shop or restaurant windows', price: 'Free quote' }
+];
 
-export const TESTIMONIALS: TestimonialItem[] = [
+export const EXTRAS_CARPETS: ExtraItem[] = [
+  { category: 'carpets', item: 'Bedroom / living room', price: '£35' },
+  { category: 'carpets', item: 'Hallway, landing, stairs', price: '£25 each' },
+  { category: 'carpets', item: 'Rug small / large', price: '£20 / £35' }
+];
+
+export const EXTRAS_UPHOLSTERY: ExtraItem[] = [
+  { category: 'upholstery', item: 'Armchair', price: '£25' },
+  { category: 'upholstery', item: '2 / 3-seater sofa', price: '£50 / £70' },
+  { category: 'upholstery', item: 'Corner sofa', price: '£95' },
+  { category: 'upholstery', item: 'Dining/office chair', price: '£10 each' },
+  { category: 'upholstery', item: 'Mattress S / D / K', price: '£30 / £40 / £50' }
+];
+
+export const EXTRAS_ADDONS: ExtraItem[] = [
+  { category: 'addons', item: 'Extra toilet', price: '£25' },
+  { category: 'addons', item: 'Extra bathroom', price: '£35' },
+  { category: 'addons', item: 'Balcony', price: '£40' },
+  { category: 'addons', item: 'Furniture left inside', price: '£70' },
+  { category: 'addons', item: 'Heavy soiling (6+ months)', price: '+20%' }
+];
+
+export const COMMERCIAL_FAQS = [
   {
-    id: '1',
-    name: 'Philip Lopen',
-    location: 'London',
-    service: 'End of Tenancy Clean',
-    category: 'tenancy',
-    rating: 5,
-    date: '6 hours ago',
-    quote: 'Great price · £400–450. The cleaners were superb, friendly and so incredibly helpful. Outstanding service and one that we whole heartedly recommend.',
-    avatarText: 'P',
-    avatarUrl: '',
-    verifiedPlatform: 'Google Reviews'
+    question: 'Do you offer a free site survey?',
+    answer: 'Yes, for all commercial premises.'
   },
   {
-    id: '2',
-    name: 'Dion Rankine',
-    location: 'London',
-    service: 'Domestic Cleaning',
-    category: 'residential',
-    rating: 5,
-    date: '20 hours ago',
-    quote: 'Reasonable price · £300–350. Booking and cleaning all done within 48 hours — very easy to work with and left my property completely spotless. Recommend highly!',
-    avatarText: 'D',
-    avatarUrl: '',
-    verifiedPlatform: 'Google Reviews'
+    question: 'Can you clean outside business hours?',
+    answer: 'Yes: early mornings, evenings and weekends.'
   },
   {
-    id: '3',
-    name: 'Kim Riches',
-    location: 'London',
-    service: 'One-off Deep Clean',
-    category: 'specialist',
-    rating: 5,
-    date: '1 week ago',
-    quote: 'Great price · £1–50. Very thorough, high quality cleaning. Completed tasks not expected, i.e. emptied bins. Left everything looking amazing.',
-    avatarText: 'K',
-    avatarUrl: '',
-    verifiedPlatform: 'Google Reviews'
+    question: 'Do you bring products and equipment?',
+    answer: 'Yes, everything is included.'
   },
   {
-    id: '4',
-    name: 'Sarah Jenkins',
-    location: 'Ilford, Redbridge',
-    service: 'End of Tenancy Clean',
-    category: 'tenancy',
-    rating: 5,
-    date: '2 weeks ago',
-    quote: 'Great price · £250–300. Bright2Shine did an unbelievable job on our 3-bedroom rental property. The oven looked brand new and the landlord returned 100% of our deposit with zero disputes.',
-    avatarText: 'S',
-    avatarUrl: '',
-    verifiedPlatform: 'Google Reviews'
+    question: 'Can we have the same cleaners each visit?',
+    answer: 'Yes, we assign a regular team.'
   },
   {
-    id: '5',
-    name: 'Tariq Al-Mansoor',
-    location: 'Barking (IG11)',
-    service: 'Office Cleaning Contract',
-    category: 'commercial',
-    rating: 5,
-    date: '1 month ago',
-    quote: 'Reasonable price · £180/mo. We contracted Bright2Shine for our financial advisory office in Barking. The team is consistently punctual, discreet, and our office always smells revitalised every morning.',
-    avatarText: 'T',
-    avatarUrl: '',
-    verifiedPlatform: 'Google Reviews'
+    question: 'What if something is missed?',
+    answer: 'Tell us within 48 hours and we\'ll re-clean it free.'
   },
   {
-    id: '6',
-    name: 'Eleanor Vance',
-    location: 'Canary Wharf',
-    service: 'Weekly Domestic Clean',
-    category: 'residential',
-    rating: 5,
-    date: '3 weeks ago',
-    quote: 'Great price · £15/hr. Reliable, thorough and communicative. Having Bright2Shine take care of our apartment weekly has freed up our weekends completely.',
-    avatarText: 'E',
-    avatarUrl: '',
-    verifiedPlatform: 'Google Reviews'
+    question: 'What is your minimum booking?',
+    answer: '3 hours per visit (4 hours for deep and after-builders cleans).'
+  },
+  {
+    question: 'How do I pay?',
+    answer: 'Commercial clients are invoiced monthly.'
   }
 ];
 
-export interface FaqItem {
-  question: string;
-  answer: string;
-  category: string;
-}
-
-export const FAQS: FaqItem[] = [
+export const HOME_FAQS = [
   {
-    question: 'Do you bring your own cleaning equipment and eco-friendly supplies?',
-    answer: 'Yes! Our cleaners come fully equipped with high-grade commercial tools, vacuums, microfiber systems, and eco-friendly, pet-safe cleaning solutions. If you prefer us to use specific products of your own, just let us know.',
-    category: 'Supplies'
+    question: 'Do you bring your own cleaning equipment and supplies?',
+    answer: 'Yes, all cleaning products and equipment are included in every price. If you have specific preferred detergents, our team is happy to accommodate.'
   },
   {
-    question: 'Are all your cleaners insured and DBS checked?',
-    answer: 'Absolutely. Every member of the Bright2Shine team undergoes thorough background vetting, DBS checks, and intensive practical training. We also carry £2M comprehensive public liability insurance for your complete peace of mind.',
-    category: 'Safety'
+    question: 'Are all your cleaners insured and vetted?',
+    answer: 'Yes. All staff are vetted and referenced. Bright2Shine Ltd carries comprehensive £5m / £10m Public Liability and £10m Employers\' Liability insurance.'
   },
   {
-    question: 'How do you price and quote your cleaning services?',
-    answer: 'We provide 100% free, no-obligation quotes. For standard homes and end of tenancy cleans, we offer straightforward hourly rates (£15-£19/hr) and fixed property packages based on bedrooms and bathrooms.',
-    category: 'Pricing'
+    question: 'What is included in an End of Tenancy clean?',
+    answer: 'End of Tenancy includes oven, inside cupboards, fridge and internal windows. Backed by our free re-clean within 48 hours if anything is missed.'
   },
   {
-    question: 'What is included in your End of Tenancy cleaning?',
-    answer: 'Our End of Tenancy clean follows strict landlord and estate agent checkout checklists: full oven steam degreasing, inside/outside of cupboards, limescale removal from all sanitaryware, doors, skirting boards, plus an optional carpet steam extraction package.',
-    category: 'Guarantee'
-  },
-  {
-    question: 'What happens if I need to reschedule or cancel my booking?',
-    answer: 'We understand schedules change! We offer flexible rescheduling. Simply give us at least 24 hours notice and we will gladly change your appointment time free of charge.',
-    category: 'Booking'
+    question: 'What happens if I need to cancel or reschedule?',
+    answer: 'Less than 24 hours\' notice incurs a 50% cancellation fee. You can reschedule easily by contacting us at least 24 hours in advance.'
   },
   {
     question: 'What areas in London and Essex do you cover?',
-    answer: 'We primarily cover Ilford, Barking, Dagenham, Redbridge, Stratford, Romford, Walthamstow, Canary Wharf, and broader London & Essex postcodes.',
-    category: 'Coverage'
+    answer: 'We cover Barking, Dagenham, Ilford, Redbridge, Romford, East Ham, Stratford, Canary Wharf and nearby Essex.'
   }
 ];
 
-export const ABOUT_US_DATA = {
-  heroTagline: 'Residential and Commercial Cleaning Services',
-  heroTitle: 'Bright2Shine Loves Cleaning Spaces!',
-  intro: "Welcome to Bright2Shine, London's premier cleaning company. With a passion for cleanliness, we provide top-notch domestic and commercial cleaning services to homes and businesses across the city. Dedicated to delivering exceptional cleaning results exceeding our customers' expectations and building long-lasting relationships.",
-  features: [
-    {
-      title: 'Instant Online Booking',
-      desc: 'See real-time availability, get an estimate, and book online in minutes. Experience the convenience of our streamlined scheduling.'
-    },
-    {
-      title: 'Flexible Scheduling',
-      desc: 'Cleaning on your terms. Easily re-schedule, book recurring visits, or plan one-off deep cleans with total peace of mind.'
-    },
-    {
-      title: 'Trusted Professionals',
-      desc: 'All London cleaners we work with are carefully vetted, background-checked, and well-trained to meet the highest standard.'
-    }
-  ],
-  commitmentTitle: 'Our Eco-Friendly Commitment',
-  commitmentText: "London's trusted eco-friendly cleaning company. We're passionate about delivering exceptional cleaning services while prioritizing the well-being of our community and the environment. We exclusively use environmentally safe, non-toxic products to minimize ecological footprints.",
-  commitmentPoints: [
-    'Reduced Carbon Footprint',
-    'Minimized Plastic Waste',
-    'Family-Friendly and Non-Toxic',
-    'Hospital-Grade EPA-Registered Disinfectants'
-  ]
-};
-
-export const COMPANY_DETAILS = {
-  name: 'Bright2Shine Ltd',
-  tagline: 'Spotless spaces. Brighter days.',
-  phone1: '07466 036791',
-  phone1Raw: '07466036791',
-  phone2: '07499 896458',
-  phone2Raw: '07499896458',
-  whatsappRaw: '447466036791',
-  email: 'info@bright2shine.com',
-  email2: 'contact@bright2shine.com',
-  emails: ['info@bright2shine.com', 'contact@bright2shine.com'],
-  address: 'F6 Viking, 104 Renwick Road, IG11 0QF, London, UK',
-  openingHours: 'Mon - Sun: 7:30 AM - 8:30 PM',
-  areasCovered: ['Ilford', 'Barking', 'Redbridge', 'Dagenham', 'Stratford', 'Romford', 'Canary Wharf', 'East London & Essex'],
-  stats: [
-    { label: 'Happy Clients', value: 1250, suffix: '+' },
-    { label: 'Cleans Completed', value: 4800, suffix: '+' },
-    { label: 'Satisfaction Rate', value: 99, suffix: '%' },
-    { label: 'Experienced Cleaners', value: 25, suffix: '+' }
-  ]
-};
+export const HOW_WE_WORK_STEPS = [
+  {
+    number: '1',
+    title: 'Request a free quote',
+    detail: 'by form, email or WhatsApp. We reply within 2 working hours.',
+    icon: 'mail'
+  },
+  {
+    number: '2',
+    title: 'Free site survey',
+    detail: 'we visit your premises, or confirm details by phone and photos for homes.',
+    icon: 'search'
+  },
+  {
+    number: '3',
+    title: 'Written quote & cleaning plan',
+    detail: 'tasks, frequency, hours and a fixed price within 48 hours.',
+    icon: 'clipboard'
+  },
+  {
+    number: '4',
+    title: 'Onboarding',
+    detail: 'keys and alarm codes, site induction and a named contact.',
+    icon: 'key'
+  },
+  {
+    number: '5',
+    title: 'Cleaning starts',
+    detail: 'the same trained, uniformed team with all products and equipment.',
+    icon: 'sparkles'
+  },
+  {
+    number: '6',
+    title: 'Quality checks',
+    detail: 'supervisor inspections and checklist sign-off.',
+    icon: 'check-circle'
+  },
+  {
+    number: '7',
+    title: 'Review & adjust',
+    detail: 'monthly check-in. Anything missed is re-cleaned free within 48 hours.',
+    icon: 'refresh'
+  }
+];

@@ -4,17 +4,17 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent),
-    title: 'Bright2Shine - Professional Cleaning in London & Essex'
+    title: 'Office & Commercial Cleaning in East London & Essex | Bright2Shine'
   },
   {
     path: 'services',
     loadComponent: () => import('./features/services/services.component').then(m => m.ServicesComponent),
-    title: 'Services & Pricing - Bright2Shine Ltd'
+    title: 'Cleaning Services & Prices | Bright2Shine'
   },
   {
     path: 'cleaning-process',
     loadComponent: () => import('./features/cleaning-process/cleaning-process.component').then(m => m.CleaningProcessComponent),
-    title: 'Cleaning Process - Bright2Shine Ltd'
+    title: 'How We Work | Bright2Shine'
   },
   {
     path: 'pricing',
@@ -22,14 +22,15 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    // Section 02.1 & 11: Remove from menu; redirect /reviews to Home (301)
     path: 'reviews',
-    loadComponent: () => import('./features/reviews/reviews.component').then(m => m.ReviewsComponent),
-    title: 'Client Reviews & Ratings - Bright2Shine Ltd'
+    redirectTo: '',
+    pathMatch: 'full'
   },
   {
     path: 'contact',
     loadComponent: () => import('./features/contact/contact.component').then(m => m.ContactComponent),
-    title: 'Contact & Free Quote - Bright2Shine Ltd'
+    title: 'Contact & Free Quote | Bright2Shine'
   },
   {
     path: '**',
